@@ -13,33 +13,38 @@ class LectorTxt:
 
 #Clase que lee el archivo cvs
 class Lector:
-
+	Diccionario={}
 	def __init__(self, archivo):
 		self.documento = open(archivo)
 		self.mnemonicos=csv.reader(self.documento)
 #Metodo usado para devolver el archivo leido. 
+	def CreandoDiccionario(self):
+		for contador in self.mnemonicos:
+			self.Diccionario[contador[1]]=contador
 	def getArchivo(self):
-		return self.mnemonicos
+		return self.Diccionario
 
 
 #Clase que busca el mnemonico en el archivo cvs
 class BuscarMnemonico:
 
-	def __init__(self,archivocvs):
-		self.mnemonicos = archivocvs
-		self.buscarD = buscarDireccionamiento (archivocvs)
+	def __init__(self,diccionario):
+		self.mnemonicos = diccionario
+		self.buscarD = buscarDireccionamiento(diccionario)
 #Metodo que busca el mnemonico en todo el set de instrucciones
 	def buscarMnemonico(self,mnemonico):
-		for listaMnemonico in self.mnemonicos:
-			if (listaMnemonico[1] == mnemonico):
-				self.buscarD.metodoDeDireccionamiento(listaMnemonico)
+		try:
+			self.buscarD.metodoDeDireccionamiento(self.mnemonicos[mnemonico])
+		except KeyError:
+			#Aqui van las directivas
+			print('Error 4')
 			
 
 #Clase que busca el metodo de direccionamiento
 class buscarDireccionamiento:
 
-	def __init__(self,archivocvs):
-		self.mnemonicos = archivocvs
+	def __init__(self,diccionario):
+		self.mnemonicos = diccionario
 
 #Metodo que busca el metodo de direccionamiento
 	def metodoDeDireccionamiento(self,lista):
@@ -152,14 +157,20 @@ class SepararLinea:
 		return self.etiqueta
 
 doc=Lector('68HC11.csv')
+doc.CreandoDiccionario()
 documento = doc.getArchivo()
 bMnemonicos = BuscarMnemonico(documento)
+
+'''for a in documento:
+	print(a[1])'''
+
+
 documento=LectorTxt('START.asc')
 Tlineas=LeerLineas(documento.getArchivoTxt())
 analizadorDLinea = AnalizarLinea()
 separadorDLinea = SepararLinea()
 
-for contador in range(1,146):
+for contador in range(1,50):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
-	bMnemonicos.buscarMnemonico(separadorDLinea.GettMnemonico().lower())
-	#print(separadorDLinea.GettMnemonico())
+	if (separadorDLinea.GettMnemonico() != ''):
+		bMnemonicos.buscarMnemonico((separadorDLinea.GettMnemonico()).lower())

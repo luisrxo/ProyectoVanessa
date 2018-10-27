@@ -48,7 +48,7 @@ class buscarDireccionamiento:
 
 #Metodo que busca el metodo de direccionamiento
 	def metodoDeDireccionamiento(self,lista):
-		print(lista)
+		print(lista,'\n')
 
 class LectorTxt:
 
@@ -84,7 +84,7 @@ class AnalizarLinea:
 			return '\0'
 
 		for a in linea:
-			if (a == '*' and self.mnemonico=='\0'):
+			if (a == '*' and self.mnemonico==''):
 				return linea
 			else:
 				if (linea[0]==' ' or linea[0]=='\t'):
@@ -156,21 +156,64 @@ class SepararLinea:
 	def GettEtiqueta(self):
 		return self.etiqueta
 
+#Case que separar las variables/constantes de las etiquetas
+class VariableOConstante:
+	#En este diccionario se guardaran todas las variables o constantes
+	variables = {}
+	etiquetas = []
+
+	#Esta funcion nos determina si es etiqueta o variable
+	def VarOEtiq(self,sentencia):
+		#Si es una variable entrara aqui
+
+		if (sentencia.lower().find('equ') != -1 ):
+		
+			#Mandamos a llamar una funcion interna que procesara la variable o etiqueta
+			self.Variable(sentencia.lower())
+		#Si es etiqueta entrara aqui 
+		else:
+			#Se mandara a un funcion interna que la procesara la etiqueta
+			self.Etiqueta(sentencia)
+		#Funcion que procesara la sentencia de variable
+	def Variable(self,variab):
+		#Esta constante es de ayuda
+		var = ''
+		#Quitamos los espacios del renglon
+		for aux in variab:
+			if (aux != ' '):
+				var = var + aux
+		#Como equ esta entre el nombre de la varibale y su direccion, aprovechando eso para agregar al diccionario
+		#En una sola sentencia
+		self.variables[var[0:var.index('equ')]] = var[var.index('equ')+3:len(var)]
+
+	def Etiqueta(self,etiqueta):
+		if (etiqueta != '\x00'):
+			if ((etiqueta in self.etiquetas) == False):
+				self.etiquetas.append(etiqueta)
+	def GettEtiquetas(self):
+		return self.etiquetas
+	def GettVariables(self):
+		return self.variables
+
+
+
 doc=Lector('68HC11.csv')
 doc.CreandoDiccionario()
 documento = doc.getArchivo()
 bMnemonicos = BuscarMnemonico(documento)
-
-'''for a in documento:
-	print(a[1])'''
-
-
 documento=LectorTxt('START.asc')
 Tlineas=LeerLineas(documento.getArchivoTxt())
 analizadorDLinea = AnalizarLinea()
 separadorDLinea = SepararLinea()
+varocons = VariableOConstante()
 
-for contador in range(1,50):
+
+#Codigo para crear la lista de variables y de etiquetas
+for contador in range(1,145):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
-	if (separadorDLinea.GettMnemonico() != ''):
-		bMnemonicos.buscarMnemonico((separadorDLinea.GettMnemonico()).lower())
+	if (separadorDLinea.GettEtiqueta() != ''):
+		varocons.VarOEtiq(separadorDLinea.GettEtiqueta())
+
+print('Estas son las etiquetas:\n', varocons.GettEtiquetas())
+print('Estas son las variables:\n',varocons.GettVariables())
+		

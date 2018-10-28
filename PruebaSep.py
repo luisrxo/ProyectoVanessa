@@ -1,4 +1,4 @@
- csv
+import csv
 
 
 #Clase que abre el archivo TXT
@@ -146,8 +146,9 @@ class SepararLinea:
 		#si la linea empieza con algun caracter es una variable constante o etiqueta :)
 
 		else:
-			if (type(cadena[0]) == type('a') and cadena[0]!='\n' and cadena.count('*',0,len(cadena)-1)<1):
-				self.etiqueta = cadena
+			if(len(cadena[0].split()) == 1):
+				if (type(cadena[0]) == type('a') and cadena[0]!='\n' and cadena.count('*',0,len(cadena)-1)<1 and cadena.count('#',0,len(cadena)-1)<1 and cadena.count('$',0,len(cadena)-1)<1):
+					self.etiqueta = cadena
 
 	def GettMnemonico(self):
 		return self.mnemonico
@@ -219,7 +220,7 @@ for contador in range(1,145):
 print('Estas son las etiquetas:\n', varocons.GettEtiquetas())
 print('Estas son las variables:\n',varocons.GettVariables()) """
 
-for contador in range(1,145):
+for contador in range(1,144):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	print(separadorDLinea.GettEtiqueta())
 

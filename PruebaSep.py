@@ -1,6 +1,6 @@
 import csv
 
-
+#global memoriaLoc=0;
 #Clase que abre el archivo TXT
 class LectorTxt:
 
@@ -73,6 +73,10 @@ class BuscarMnemonico:
 		except KeyError:
 			#Aqui van las directivas
 			print('Error 4')
+		#if(self.buscarD.metodoDeDireccionamiento(self.mnemonicos[mnemonico])=='org'):
+			#nada
+		#if(self.buscarD.metodoDeDireccionamiento(self.mnemonicos[mnemonico])=='fcb'):
+			#nada
 			
 
 #Clase que busca el metodo de direccionamiento
@@ -208,9 +212,9 @@ class SepararLinea:
 	def GettMnemonico(self):
 		return self.mnemonico
 	def GettDireccionamiento(self):
-		return self.direccionamiento
+		return self.direccionamiento.strip()
 	def GettEtiqueta(self):
-		return self.etiqueta
+		return self.etiqueta.strip()
 	def GettVariable(self):
 		return self.variable
 
@@ -224,7 +228,7 @@ class Direccionamiento:
 		bandera = [0]
 		try:
 			direccionamientos = self.Direccionamientos[mnemonico.lower()]
-			if(variable == ''):
+			if(variable ==''):
 				# Direccionamiento inherente
 				if(direccionamientos[5] != 0):
 					bandera = direccionamientos[5]
@@ -255,6 +259,11 @@ class Direccionamiento:
 					if(direccionamientos[4] != 0):
 						bandera = direccionamientos[4]
 						print("Direccionamiento extendido")
+						#hexadecimal
+						if(variable[0]!='$'):
+							hexa=hex(int(variable))
+							variable=str(hexa).upper()
+							variable=variable[2:len(variable)]
 					else:
 						print("Error")
 				elif(len(variable) >=1):
@@ -262,6 +271,11 @@ class Direccionamiento:
 					if(direccionamientos[1] != 0):
 						bandera = direccionamientos[1]
 						print("Direccionamiento directo")
+						#hexadecimal
+						if(variable[0]!='$'):
+							hexa=hex(int(variable))
+							variable=str(hexa).upper()
+							variable=variable[2:len(variable)]
 					else:
 						print("Error")
 			else:
@@ -269,12 +283,15 @@ class Direccionamiento:
 				if(direccionamientos[0] != 0):
 					bandera = direccionamientos[0]
 					print("Direccionamiento inmediato")
-				elif(direccionamientos[6] != 0):
+					if(variable[1]!='$' and variable[1]!="'"):
+						hexa=hex(int(variable))
+						variable=str(hexa).upper()
+						variable=variable[2:len(variable)]
 					bandera = direccionamientos[6]
 					print("Direccionamiento relativo")
 				else:
 					print("Error")
-			print("OpCode, tamaño: "+str(bandera))
+			print("OpCode, tamanio , direccionamiento  : "+str(bandera)+" : " +str(variable))
 		except KeyError:
 			print("Error 4")
 		
@@ -355,13 +372,13 @@ etiquetas = varocons.GettEtiquetas()
 
 for contador in range(1,144):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
-	print("\nLínea: "+str(Tlineas.getLineNumber()))
+	print("\nLinea: "+str(Tlineas.getLineNumber()))
 	if(etiquetas.count(separadorDLinea.GettEtiqueta()) != 0):
 		etiqueta = separadorDLinea.GettEtiqueta()
 		print("Etiqueta: "+etiqueta)
 	if(separadorDLinea.GettMnemonico()!=''):
 		mnemonico = separadorDLinea.GettMnemonico()
-		print("Mnemónico: "+mnemonico)
+		print("Mnemonico: "+mnemonico)
 
 		if(separadorDLinea.GettDireccionamiento().lower() in variables):
 			variable = variables[separadorDLinea.GettDireccionamiento().lower()]
@@ -370,8 +387,7 @@ for contador in range(1,144):
 		else:
 			variable = separadorDLinea.GettDireccionamiento()
 
-		if(variable!=''):
+		if(variable!='' or mnemonico!=''):
 			print("Variable: "+variable)
 			if(variable.find("(Etiqueta)") == -1):
 				direccionador.buscarDireccionamiento(mnemonico, variable)
-	

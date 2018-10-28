@@ -20,37 +20,36 @@ class Lector:
 #Metodo usado para devolver el archivo leido. 
 	def CreandoDiccionario(self):
 		for contador in self.mnemonicos:
-			mnemonico = list()
 			banderas = list()
 			#print("Contador[1]: |"+contador[1]+"|  Contador[2]: |"+contador[2]+"|  Contador[3]: |"+contador[3]+"|  Contador[4]: |"+contador[4]+"|  Contador[5]: |"+contador[5]+"|  Contador[6]: |"+contador[6]+"|  Contador[7]: |"+contador[7]+"|  Contador[8]: |"+contador[8]+"|  Contador[9]: |"+contador[9])
 			if(contador[2] == "-- " and contador[3] == "-- " and contador[4] == "-- "):
 				banderas.append(0)
 			else:
-				banderas.append(1)
+				banderas.append([contador[2], contador[4]])
 			if(contador[5] == "-- " and contador[6] == "-- " and contador[7] == "-- "):
 				banderas.append(0)
 			else:
-				banderas.append(1)
+				banderas.append([contador[5], contador[7]])
 			if(contador[8] == "-- " and contador[9] == "-- " and contador[10] == "-- "):
 				banderas.append(0)
 			else:
-				banderas.append(1)
+				banderas.append([contador[8], contador[10]])
 			if(contador[11] == "-- " and contador[12] == "-- " and contador[13] == "-- "):
 				banderas.append(0)
 			else:
-				banderas.append(1)
+				banderas.append([contador[11], contador[13]])
 			if(contador[14] == "-- " and contador[15] == "-- " and contador[16] == "-- "):
 				banderas.append(0)
 			else:
-				banderas.append(1)
+				banderas.append([contador[14], contador[16]])
 			if(contador[17] == "-- " and contador[18] == "-- " and contador[19] == "-- "):
 				banderas.append(0)
 			else:
-				banderas.append(1)
+				banderas.append([contador[17], contador[19]])
 			if(contador[20] == "-- " and contador[21] == "-- " and contador[22] == "-- "):
 				banderas.append(0)
 			else:
-				banderas.append(1)
+				banderas.append([contador[20], contador[22]])
 			
 			
 			self.Diccionario[contador[1]] = banderas
@@ -133,7 +132,7 @@ class SepararLinea:
 
 	def __init__(self):
 		self.mnemonico=''
-		self.direccionamiento=''
+		self.direccionamiento=[0]*7
 		self.etiqueta=''
 
 	def Separando(self, cadena):
@@ -252,10 +251,10 @@ for contador in range(1,145):
 		varocons.VarOEtiq(separadorDLinea.GettEtiqueta())
 
 print('Estas son las etiquetas:\n', varocons.GettEtiquetas())
-print('Estas son las variables:\n',varocons.GettVariables()) """
+print('Estas son las variables:\n',varocons.GettVariables()) 
 
-"""for contador in range(1,144):
+for contador in range(1,144):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
-	print(separadorDLinea.GettEtiqueta())
-"""
-		
+	print("Label: "+separadorDLinea.GettEtiqueta())
+	print("Direccionamiento: "+str(separadorDLinea.GettDireccionamiento()))
+		"""

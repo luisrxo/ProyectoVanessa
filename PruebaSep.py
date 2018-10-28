@@ -50,7 +50,9 @@ class Lector:
 				banderas.append(0)
 			else:
 				banderas.append([contador[20], contador[22]])
-			
+			# Formato de banderas: 
+			# [  1,  2,    3,     4,    5,    6,  7 ]
+			# [IMM, DIR, IND,X, IND,Y, EXT, INH, REL]
 			
 			self.Diccionario[contador[1]] = banderas
 		#print(self.Diccionario)
@@ -213,12 +215,70 @@ class SepararLinea:
 		return self.variable
 
 class Direccionamiento:
-	def __init__(self, Variables, Etiquetas):
-		self.variables = Variables
-		self.etiquetas = Etiquetas
-	
-	"""def buscarDireccionamiento(self, ):
-		if()"""
+	def __init__(self, DiccionarioDireccionamiento):
+		self.Direccionamientos = DiccionarioDireccionamiento
+	# Formato de banderas: 
+	# [  1,  2,    3,     4,    5,    6,  7 ]
+	# [IMM, DIR, IND,X, IND,Y, EXT, INH, REL]
+	def buscarDireccionamiento(self, mnemonico, variable):
+		bandera = [0]
+		try:
+			direccionamientos = self.Direccionamientos[mnemonico.lower()]
+			if(variable == ''):
+				# Direccionamiento inherente
+				if(direccionamientos[5] != 0):
+					bandera = direccionamientos[5]
+					print("Direccionamiento inherente")
+				else:
+					print("Error")
+			elif(variable[0] != '#'):
+				if(variable.find(',') == 3):
+					if(variable.find('X') == 4):
+						# Direccionamiento indexado respecto a X
+						if(direccionamientos[2] != 0):
+							bandera = direccionamientos[2]
+							print("Direccionamiento indexado respecto a X")
+						else:
+							print("Error")
+					elif(variable.find('Y') == 4):
+						# Direccionamiento indexado respecto a Y
+						if(direccionamientos[3] != 0):
+							bandera = direccionamientos[3]
+							print("Direccionamiento indexado respecto a Y")
+						else:
+							print("Error")
+					else:
+						# Error
+						print("Error")
+				elif(len(variable) >= 4):
+					# Direccionamiento extendido
+					if(direccionamientos[4] != 0):
+						bandera = direccionamientos[4]
+						print("Direccionamiento extendido")
+					else:
+						print("Error")
+				elif(len(variable) >=1):
+					# Direccionamiento directo
+					if(direccionamientos[1] != 0):
+						bandera = direccionamientos[1]
+						print("Direccionamiento directo")
+					else:
+						print("Error")
+			else:
+				# Direccionamiento inmediato o relativo
+				if(direccionamientos[0] != 0):
+					bandera = direccionamientos[0]
+					print("Direccionamiento inmediato")
+				elif(direccionamientos[6] != 0):
+					bandera = direccionamientos[6]
+					print("Direccionamiento relativo")
+				else:
+					print("Error")
+			print("OpCode, tamaño: "+str(bandera))
+		except KeyError:
+			print("Error 4")
+		
+  
 
 #Case que separar las variables/constantes de las etiquetas
 class VariableOConstante:
@@ -289,23 +349,29 @@ print("Las etiquetas son: "+str(varocons.GettEtiquetas()))
 
 Tlineas.resetLineNumber()
 
-direccionador = Direccionamiento(varocons.GettVariables(), varocons.GettEtiquetas())
+direccionador = Direccionamiento(doc.getArchivo())
+variables = varocons.GettVariables()
+etiquetas = varocons.GettEtiquetas()
 
 for contador in range(1,144):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
-	print("\nLinea: "+str(Tlineas.getLineNumber()))
-	if(separadorDLinea.GettMnemonico()!=''):
-		print("Mnemónico: "+separadorDLinea.GettMnemonico())
-	variables = varocons.GettVariables()
-	etiquetas = varocons.GettEtiquetas()
-	if(separadorDLinea.GettDireccionamiento().lower() in variables):
-		variable = variables[separadorDLinea.GettDireccionamiento().lower()]
-	elif(etiquetas.count(separadorDLinea.GettDireccionamiento()) != 0):
-		variable = "(Etiqueta) "+separadorDLinea.GettDireccionamiento()
-	else:
-		variable = separadorDLinea.GettDireccionamiento()
+	print("\nLínea: "+str(Tlineas.getLineNumber()))
 	if(etiquetas.count(separadorDLinea.GettEtiqueta()) != 0):
 		etiqueta = separadorDLinea.GettEtiqueta()
 		print("Etiqueta: "+etiqueta)
-	if(variable!=''):
-		print("Variable: "+variable)
+	if(separadorDLinea.GettMnemonico()!=''):
+		mnemonico = separadorDLinea.GettMnemonico()
+		print("Mnemónico: "+mnemonico)
+
+		if(separadorDLinea.GettDireccionamiento().lower() in variables):
+			variable = variables[separadorDLinea.GettDireccionamiento().lower()]
+		elif(etiquetas.count(separadorDLinea.GettDireccionamiento()) != 0):
+			variable = "(Etiqueta) "+separadorDLinea.GettDireccionamiento()
+		else:
+			variable = separadorDLinea.GettDireccionamiento()
+
+		if(variable!=''):
+			print("Variable: "+variable)
+			if(variable.find("(Etiqueta)") == -1):
+				direccionador.buscarDireccionamiento(mnemonico, variable)
+	

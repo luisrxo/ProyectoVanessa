@@ -53,7 +53,7 @@ class Lector:
 			
 			
 			self.Diccionario[contador[1]] = banderas
-		print(self.Diccionario)
+		#print(self.Diccionario)
 	def getArchivo(self):
 		return self.Diccionario
 
@@ -134,9 +134,20 @@ class SepararLinea:
 		self.mnemonico=''
 		self.direccionamiento=[0]*7
 		self.etiqueta=''
+		self.variable=[]
 
 	def Separando(self, cadena):
-		if ( cadena[0]=='\t'):
+		if(cadena.lower().find('equ') != -1):
+			#Esta constante es de ayuda
+			var = ''
+			#Quitamos los espacios del renglon
+			for aux in cadena.lower():
+				if (aux != ' '):
+					var = var + aux
+			#Como equ esta entre el nombre de la varibale y su direccion, aprovechando eso para agregar al diccionario
+			#En una sola sentencia
+			self.variable = [var[0:var.index('equ')], var[var.index('equ')+3:len(var)]]
+		elif ( cadena[0]=='\t'):
 			#separando mnemonico y direccionamiento  
 			contaba=0
 			a=0
@@ -189,6 +200,16 @@ class SepararLinea:
 		return self.direccionamiento
 	def GettEtiqueta(self):
 		return self.etiqueta
+	def GettVariable(self):
+		return self.variable
+
+class Direccionamiento:
+	def __init__(self, Variables, Etiquetas):
+		self.variables = Variables
+		self.etiquetas = Etiquetas
+	
+	"""def buscarDireccionamiento(self, strDir):
+		if()"""
 
 #Case que separar las variables/constantes de las etiquetas
 class VariableOConstante:
@@ -199,26 +220,29 @@ class VariableOConstante:
 	#Esta funcion nos determina si es etiqueta o variable
 	def VarOEtiq(self,sentencia):
 		#Si es una variable entrara aqui
-
 		if (sentencia.lower().find('equ') != -1 ):
 		
 			#Mandamos a llamar una funcion interna que procesara la variable o etiqueta
+			print("Se ha encontrado una variable")
 			self.Variable(sentencia.lower())
 		#Si es etiqueta entrara aqui 
 		else:
 			#Se mandara a un funcion interna que la procesara la etiqueta
 			self.Etiqueta(sentencia)
 		#Funcion que procesara la sentencia de variable
-	def Variable(self,variab):
+	"""def Variable(self,variab):
 		#Esta constante es de ayuda
 		var = ''
 		#Quitamos los espacios del renglon
-		for aux in variab:
+		for aux in self.variables:
 			if (aux != ' '):
 				var = var + aux
 		#Como equ esta entre el nombre de la varibale y su direccion, aprovechando eso para agregar al diccionario
 		#En una sola sentencia
-		self.variables[var[0:var.index('equ')]] = var[var.index('equ')+3:len(var)]
+		self.variables[var[0:var.index('equ')]] = var[var.index('equ')+3:len(var)]"""
+
+	def agregarVariable(self, variable):
+		self.variables[variable[0]] = variable[1]
 
 	def Etiqueta(self,etiqueta):
 		if (etiqueta != '\x00'):
@@ -242,19 +266,21 @@ separadorDLinea = SepararLinea()
 varocons = VariableOConstante()
 
 
-"""
+
 
 #Codigo para crear la lista de variables y de etiquetas
 for contador in range(1,145):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	if (separadorDLinea.GettEtiqueta() != ''):
 		varocons.VarOEtiq(separadorDLinea.GettEtiqueta())
-
-print('Estas son las etiquetas:\n', varocons.GettEtiquetas())
-print('Estas son las variables:\n',varocons.GettVariables()) 
-
-for contador in range(1,144):
-	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
-	print("Label: "+separadorDLinea.GettEtiqueta())
+	if(separadorDLinea.GettVariable() != []):
+		varocons.agregarVariable(separadorDLinea.GettVariable())
+	print("\n\nMnemónico: "+str(separadorDLinea.GettMnemonico()))
 	print("Direccionamiento: "+str(separadorDLinea.GettDireccionamiento()))
-		"""
+	print("Etiqueta: "+str(separadorDLinea.GettEtiqueta()))
+	print("Variable: "+str(separadorDLinea.GettVariable()))
+
+print("Las variables son: "+str(varocons.GettVariables()))
+print("Las etiquetas son: "+str(varocons.GettEtiquetas()))
+
+direccionador = Direccionamiento(varocons.GettVariables(), varocons.GettEtiquetas())

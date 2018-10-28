@@ -20,7 +20,41 @@ class Lector:
 #Metodo usado para devolver el archivo leido. 
 	def CreandoDiccionario(self):
 		for contador in self.mnemonicos:
-			self.Diccionario[contador[1]]=contador
+			mnemonico = list()
+			banderas = list()
+			#print("Contador[1]: |"+contador[1]+"|  Contador[2]: |"+contador[2]+"|  Contador[3]: |"+contador[3]+"|  Contador[4]: |"+contador[4]+"|  Contador[5]: |"+contador[5]+"|  Contador[6]: |"+contador[6]+"|  Contador[7]: |"+contador[7]+"|  Contador[8]: |"+contador[8]+"|  Contador[9]: |"+contador[9])
+			if(contador[2] == "-- " and contador[3] == "-- " and contador[4] == "-- "):
+				banderas.append(0)
+			else:
+				banderas.append(1)
+			if(contador[5] == "-- " and contador[6] == "-- " and contador[7] == "-- "):
+				banderas.append(0)
+			else:
+				banderas.append(1)
+			if(contador[8] == "-- " and contador[9] == "-- " and contador[10] == "-- "):
+				banderas.append(0)
+			else:
+				banderas.append(1)
+			if(contador[11] == "-- " and contador[12] == "-- " and contador[13] == "-- "):
+				banderas.append(0)
+			else:
+				banderas.append(1)
+			if(contador[14] == "-- " and contador[15] == "-- " and contador[16] == "-- "):
+				banderas.append(0)
+			else:
+				banderas.append(1)
+			if(contador[17] == "-- " and contador[18] == "-- " and contador[19] == "-- "):
+				banderas.append(0)
+			else:
+				banderas.append(1)
+			if(contador[20] == "-- " and contador[21] == "-- " and contador[22] == "-- "):
+				banderas.append(0)
+			else:
+				banderas.append(1)
+			
+			
+			self.Diccionario[contador[1]] = banderas
+		print(self.Diccionario)
 	def getArchivo(self):
 		return self.Diccionario
 
@@ -220,8 +254,8 @@ for contador in range(1,145):
 print('Estas son las etiquetas:\n', varocons.GettEtiquetas())
 print('Estas son las variables:\n',varocons.GettVariables()) """
 
-for contador in range(1,144):
+"""for contador in range(1,144):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	print(separadorDLinea.GettEtiqueta())
-
+"""
 		

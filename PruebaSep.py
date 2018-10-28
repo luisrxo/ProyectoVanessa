@@ -102,6 +102,12 @@ class LeerLineas:
 	def MandarLinea(self):
 		self.linea = self.linea+1
 		return self.lineas[self.linea]
+	
+	def resetLineNumber(self):
+		self.linea = -1
+
+	def getLineNumber(self):
+		return self.linea
 
 #Metodo que analiza la linea (Incompleto)
 class AnalizarLinea:
@@ -132,11 +138,14 @@ class SepararLinea:
 
 	def __init__(self):
 		self.mnemonico=''
-		self.direccionamiento=[0]*7
 		self.etiqueta=''
 		self.variable=[]
 
 	def Separando(self, cadena):
+		self.mnemonico=''
+		self.etiqueta=''
+		self.variable=[]
+		self.direccionamiento = ''
 		if(cadena.lower().find('equ') != -1):
 			#Esta constante es de ayuda
 			var = ''
@@ -208,7 +217,7 @@ class Direccionamiento:
 		self.variables = Variables
 		self.etiquetas = Etiquetas
 	
-	"""def buscarDireccionamiento(self, strDir):
+	"""def buscarDireccionamiento(self, ):
 		if()"""
 
 #Case que separar las variables/constantes de las etiquetas
@@ -267,7 +276,6 @@ varocons = VariableOConstante()
 
 
 
-
 #Codigo para crear la lista de variables y de etiquetas
 for contador in range(1,145):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
@@ -275,12 +283,29 @@ for contador in range(1,145):
 		varocons.VarOEtiq(separadorDLinea.GettEtiqueta())
 	if(separadorDLinea.GettVariable() != []):
 		varocons.agregarVariable(separadorDLinea.GettVariable())
-	print("\n\nMnemónico: "+str(separadorDLinea.GettMnemonico()))
-	print("Direccionamiento: "+str(separadorDLinea.GettDireccionamiento()))
-	print("Etiqueta: "+str(separadorDLinea.GettEtiqueta()))
-	print("Variable: "+str(separadorDLinea.GettVariable()))
 
 print("Las variables son: "+str(varocons.GettVariables()))
 print("Las etiquetas son: "+str(varocons.GettEtiquetas()))
 
+Tlineas.resetLineNumber()
+
 direccionador = Direccionamiento(varocons.GettVariables(), varocons.GettEtiquetas())
+
+for contador in range(1,144):
+	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
+	print("\nLinea: "+str(Tlineas.getLineNumber()))
+	if(separadorDLinea.GettMnemonico()!=''):
+		print("Mnemónico: "+separadorDLinea.GettMnemonico())
+	variables = varocons.GettVariables()
+	etiquetas = varocons.GettEtiquetas()
+	if(separadorDLinea.GettDireccionamiento().lower() in variables):
+		variable = variables[separadorDLinea.GettDireccionamiento().lower()]
+	elif(etiquetas.count(separadorDLinea.GettDireccionamiento()) != 0):
+		variable = "(Etiqueta) "+separadorDLinea.GettDireccionamiento()
+	else:
+		variable = separadorDLinea.GettDireccionamiento()
+	if(etiquetas.count(separadorDLinea.GettEtiqueta()) != 0):
+		etiqueta = separadorDLinea.GettEtiqueta()
+		print("Etiqueta: "+etiqueta)
+	if(variable!=''):
+		print("Variable: "+variable)

@@ -118,7 +118,7 @@ class SepararLinea:
 		self.variable=[]
 
 	def Separando(self, cadena):
-		#cadena=cadena+' '
+		cadena=cadena+' '
 		self.mnemonico=''
 		self.etiqueta=''
 		self.variable=[]

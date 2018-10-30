@@ -55,7 +55,7 @@ class Lector:
 			# [IMM, DIR, IND,X, IND,Y, EXT, INH, REL]
 			
 			self.Diccionario[contador[1]] = banderas
-		#print(self.Diccionario)
+		print(self.Diccionario)
 	def getArchivo(self):
 		return self.Diccionario
 
@@ -203,14 +203,21 @@ class Direccionamiento:
 				variable = '$' + '0' + variable[1:len(variable)]"""
 		try:
 			direccionamientos = self.Direccionamientos[mnemonico.lower()]
-			if(variable ==''):
+			
+			if str(variable) =='':
 				# Direccionamiento inherente
 				if(direccionamientos[5] != 0):
 					bandera = direccionamientos[5]
 					print("Direccionamiento inherente")
 				else:
 					print("Error")
-			elif(variable[0] != '#'):
+			else:
+				variable = str(variable)
+				if(variable.find("\'") != -1):
+					indice = variable.find("'")
+					print(type(indice))
+					variable = str(ord(variable[indice+1]))
+					print("Código ASCII: "+variable)
 				if(variable.find(',') == 3):
 					if(variable.find('X') == 4):
 						# Direccionamiento indexado respecto a X
@@ -253,9 +260,8 @@ class Direccionamiento:
 							variable=variable[2:len(variable)]
 					else:
 						print("Error")
-			else:
 				# Direccionamiento inmediato o relativo
-				if(direccionamientos[0] != 0):
+				elif(direccionamientos[0] != 0):
 					bandera = direccionamientos[0]
 					print("Direccionamiento inmediato")
 					if(variable[1]!='$' and variable[1]!="'"):
@@ -265,9 +271,10 @@ class Direccionamiento:
 					bandera = direccionamientos[6]
 				else:
 					print("Error")
+				
 			print(str(self.dirMem)+", "+str(bandera))
-			self.dirMem = self.dirMem + bandera[1]
-			print("OpCode, tamanio , direccionamiento  : "+str(bandera)+" : " +str(variable)+" Mem: "+str(self.dirMem))
+			self.dirMem = self.dirMem + int(bandera[len(bandera)-1])
+			print("OpCode, tamanio , direccionamiento  : "+str(bandera)+" : Variable " +str(variable)+" Mem: "+str(self.dirMem))
 			
 		except KeyError:
 			print("Error 4")
@@ -284,7 +291,7 @@ class Direccionamiento:
 			"""hexa=hex(int(variable))
 			variable=str(hexa).upper()
 			variable=variable[2:len(variable)]"""
-			print("OpCode, tamanio , direccionamiento  : "+str(bandera)+" : " +str(variable))
+			print("OpCode, tamanio , direccionamiento  : "+str(bandera)+" : Variable " +str(variable)+" Mem: "+str(self.dirMem))
 		else:
 			self.buscarDireccionamiento(mnemonico, variable)
 

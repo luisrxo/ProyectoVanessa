@@ -455,3 +455,4 @@ for contador in range(1,145):
 					direccionador.direccionamientoRelativo(mnemonico, variable.strip("(Etiqueta) "),dic,manejoE,Tlineas.getLineNumber())
 
 print("Las etiquetas son: "+str(varocons.GettEFinal()))
+#ya lo cambie

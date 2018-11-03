@@ -293,7 +293,12 @@ class Direccionamiento:
 			print("OpCode, tamanio , direccionamiento  : "+str(bandera)+" : Variable " +str(variable)+" Mem: "+str(self.dirMem))
 		
 		except KeyError:
-			manejo.error4(lineas)
+			if(mnemonico=='ORG'):
+				self.dirMem="0x"+variable[1:]
+			elif(mnemonico=='FCB'):
+				print("nada") 
+			else:
+				manejo.error4(lineas)
 	def direccionamientoRelativo(self, mnemonico, variable,listaEti,manejo,lineas):
 		
 		direccionamiento = self.Direccionamientos[mnemonico.lower()]

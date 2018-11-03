@@ -9,3 +9,9 @@ class LeerLineas:
 	def MandarLinea(self):
 		self.linea = self.linea+1
 		return self.lineas[self.linea]
+	
+	def resetLineNumber(self):
+		self.linea = -1
+
+	def getLineNumber(self):
+		return self.linea

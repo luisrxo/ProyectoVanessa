@@ -294,9 +294,9 @@ class Direccionamiento:
 		
 		except KeyError:
 			if(mnemonico=='ORG'):
-				self.dirMem="0x"+variable[1:]
+				self.dirMem=int("0x"+variable[1:],0)
 			elif(mnemonico=='FCB'):
-				print("nada") 
+				#nada 
 			else:
 				manejo.error4(lineas)
 	def direccionamientoRelativo(self, mnemonico, variable,listaEti,manejo,lineas):
@@ -391,7 +391,7 @@ varocons = VariableOConstante()
 
 
 #Codigo para crear la lista de variables y de etiquetas
-for contador in range(1,150):
+for contador in range(1,145):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	if (separadorDLinea.GettEtiqueta() != ''):
 		varocons.VarOEtiq(separadorDLinea.GettEtiqueta())
@@ -406,14 +406,14 @@ Tlineas.resetLineNumber()
 dirMemoriaActual= hex(0)
 
 #Encontrando el inicio
-while(contador <150):
+while(contador <145):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	if separadorDLinea.GettMnemonico() == 'ORG':
 		direc=separadorDLinea.GettDireccionamiento()
 		num=hex(int("0x"+direc[1:], 16))
 		dirMemoriaActual=num
 		print(dirMemoriaActual)
-		contador=150
+		contador=145
 
 
 direccionador = Direccionamiento(doc.getArchivo(), dirMemoriaActual)
@@ -422,7 +422,7 @@ etiquetas = varocons.GettEtiquetas()
 
 
 Tlineas.resetLineNumber()
-for contador in range(1,150):
+for contador in range(1,145):
 
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	print("\nLinea: "+str(Tlineas.getLineNumber()))
@@ -455,4 +455,3 @@ for contador in range(1,150):
 					direccionador.direccionamientoRelativo(mnemonico, variable.strip("(Etiqueta) "),dic,manejoE,Tlineas.getLineNumber())
 
 print("Las etiquetas son: "+str(varocons.GettEFinal()))
-#ya lo cambie

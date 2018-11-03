@@ -289,7 +289,7 @@ class Direccionamiento:
 
 					
 			print(str(self.dirMem)+", "+str(bandera))
-			self.dirMem = self.dirMem + int(bandera[len(bandera)-1])
+			self.dirMem = hex(int("0x"+self.dirMem[2:], 16) + int(bandera[len(bandera)-1]))
 			print("OpCode, tamanio , direccionamiento  : "+str(bandera)+" : Variable " +str(variable)+" Mem: "+str(self.dirMem))
 		
 		except KeyError:
@@ -398,12 +398,14 @@ print("Las etiquetas son: "+str(varocons.GettEtiquetas()))
 
 Tlineas.resetLineNumber()
 
+dirMemoriaActual= hex(0)
+
 #Encontrando el inicio
 while(contador <145):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	if separadorDLinea.GettMnemonico() == 'ORG':
 		direc=separadorDLinea.GettDireccionamiento()
-		num=int(direc[1:]) 
+		num=hex(int("0x"+direc[1:], 16))
 		dirMemoriaActual=num
 		print(dirMemoriaActual)
 		contador=145

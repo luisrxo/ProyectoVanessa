@@ -195,7 +195,7 @@ class Direccionamiento:
 	# Formato de banderas: 
 	# [  1,  2,    3,     4,    5,    6,  7 ]
 	# [IMM, DIR, IND,X, IND,Y, EXT, INH, REL]
-	def buscarDireccionamiento(self, mnemonico, variable,relativo,manejo):
+	def buscarDireccionamiento(self, mnemonico, variable,relativo,manejo,lineas):
 		bandera = [0]
 		
 		if (str(variable).find('$') != -1 and (str(variable).find('#')==-1)):
@@ -217,13 +217,13 @@ class Direccionamiento:
 						bandera = direccionamientos[5]
 						print("Direccionamiento inherente")
 					else:
-						manejo.error6(self.dirMem)
+						manejo.error6(lineas)
 				else:
 					if(variable.find(',') == 3):
 						if(variable.find('X') == 4):
 							# Direccionamiento indexado respecto a X
 							if len(variable) > 5:
-								manejo.error7(self.dirMem)
+								manejo.error7(lineas)
 							elif(direccionamientos[2] != 0):
 								bandera = direccionamientos[2]
 								print("Direccionamiento indexado respecto a X")
@@ -232,7 +232,7 @@ class Direccionamiento:
 						elif(variable.find('Y') == 4):
 							# Direccionamiento indexado respecto a Y
 							if len(variable) > 5:
-								manejo.error7(self.dirMem)
+								manejo.error7(lineas)
 							elif(direccionamientos[3] != 0):
 								bandera = direccionamientos[3]
 								print("Direccionamiento indexado respecto a Y")
@@ -250,12 +250,12 @@ class Direccionamiento:
 								variable=str(hexa).upper()
 								variable=variable[2:len(variable)]
 							if len(variable)>6:
-								manejo.error7(self.dirMem)
+								manejo.error7(lineas)
 							else:
 								bandera = direccionamientos[4]
 								print("Direccionamiento extendido")
 						else:
-							manejo.error7(self.dirMem)
+							manejo.error7(lineas)
 					elif(len(variable) >=1):
 						# Direccionamiento directo
 						if(direccionamientos[1] != 0):
@@ -267,7 +267,7 @@ class Direccionamiento:
 								variable=str(hexa).upper()
 								variable=variable[2:len(variable)]
 							if len(variable) > 3:
-								manejo.error7(self.dirMem)
+								manejo.error7(lineas)
 							else:
 								bandera = direccionamientos[1]
 								print("Direccionamiento directo")
@@ -280,7 +280,7 @@ class Direccionamiento:
 						variable=str(hexa).upper()
 						variable=variable[2:len(variable)]
 					if len(variable) > 6 :
-						manejo.error7(self.dirMem)
+						manejo.error7(lineas)
 					bandera = direccionamientos[0]
 			else:
 				if (relativo != 0):
@@ -293,8 +293,8 @@ class Direccionamiento:
 			print("OpCode, tamanio , direccionamiento  : "+str(bandera)+" : Variable " +str(variable)+" Mem: "+str(self.dirMem))
 		
 		except KeyError:
-			manejo.error4(self.dirMem)
-	def direccionamientoRelativo(self, mnemonico, variable,listaEti,manejo):
+			manejo.error4(lineas)
+	def direccionamientoRelativo(self, mnemonico, variable,listaEti,manejo,lineas):
 		
 		direccionamiento = self.Direccionamientos[mnemonico.lower()]
 		if (not(variable in self.labels)):
@@ -308,7 +308,7 @@ class Direccionamiento:
 			salto=3 #hex(self.dirMem-self.listEti[variable])
 			print("OpCode, tamanio , direccionamiento  : "+str(bandera)+" : Variable " +str(salto)+" Mem: "+str(self.dirMem))
 		else:
-			self.buscarDireccionamiento(mnemonico, variable,1,manejo)
+			self.buscarDireccionamiento(mnemonico, variable,1,manejo,lineas)
 	def GettDireccion(self):
 		return self.dirMem
 
@@ -438,13 +438,13 @@ for contador in range(1,145):
 		if(variable!='' or mnemonico!=''):
 			print("Variable: "+variable)
 			if(variable.find("(Etiqueta)") == -1):
-				direccionador.buscarDireccionamiento(mnemonico, variable,1,manejoE)
+				direccionador.buscarDireccionamiento(mnemonico, variable,1,manejoE,Tlineas.getLineNumber())
 			else:
 				if separadorDLinea.GettMnemonico() == 'JMP':
 					salto = varocons.GettEFinal()
-					direccionador.buscarDireccionamiento(mnemonico,salto[separadorDLinea.GettDireccionamiento()],1,manejoE)
+					direccionador.buscarDireccionamiento(mnemonico,salto[separadorDLinea.GettDireccionamiento()],1,manejoE,Tlineas.getLineNumber())
 				else:
 					dic={}
-					direccionador.direccionamientoRelativo(mnemonico, variable.strip("(Etiqueta) "),dic,manejoE)
+					direccionador.direccionamientoRelativo(mnemonico, variable.strip("(Etiqueta) "),dic,manejoE,Tlineas.getLineNumber())
 
 print("Las etiquetas son: "+str(varocons.GettEFinal()))

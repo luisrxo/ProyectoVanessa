@@ -391,7 +391,7 @@ varocons = VariableOConstante()
 
 
 #Codigo para crear la lista de variables y de etiquetas
-for contador in range(1,145):
+for contador in range(1,150):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	if (separadorDLinea.GettEtiqueta() != ''):
 		varocons.VarOEtiq(separadorDLinea.GettEtiqueta())
@@ -406,14 +406,14 @@ Tlineas.resetLineNumber()
 dirMemoriaActual= hex(0)
 
 #Encontrando el inicio
-while(contador <145):
+while(contador <150):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	if separadorDLinea.GettMnemonico() == 'ORG':
 		direc=separadorDLinea.GettDireccionamiento()
 		num=hex(int("0x"+direc[1:], 16))
 		dirMemoriaActual=num
 		print(dirMemoriaActual)
-		contador=145
+		contador=150
 
 
 direccionador = Direccionamiento(doc.getArchivo(), dirMemoriaActual)
@@ -422,7 +422,7 @@ etiquetas = varocons.GettEtiquetas()
 
 
 Tlineas.resetLineNumber()
-for contador in range(1,145):
+for contador in range(1,150):
 
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	print("\nLinea: "+str(Tlineas.getLineNumber()))

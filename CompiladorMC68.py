@@ -1,5 +1,3 @@
-import csv
-
 from direccionamiento import Direccionamiento
 from separarLinea import SepararLinea
 from lectorTxt import LectorTxt
@@ -93,10 +91,12 @@ for contador in range(1,150):
 			else:
 				if separadorDLinea.GettMnemonico() == 'JMP':
 					salto = varocons.GettEFinal()
-					direccionador.buscarDireccionamiento(mnemonico,salto[separadorDLinea.GettDireccionamiento()],1,manejoE,Tlineas.getLineNumber())
+					# Parámetros: buscarDireccionamiento(mnemonico, variable,relativo,manejo,lineas)
+					direccionador.direccionamientoRelativo(mnemonico,1,manejoE,Tlineas.getLineNumber())
 				else:
 					dic={}
-					direccionador.direccionamientoRelativo(mnemonico, variable.strip("(Etiqueta) "),dic,manejoE,Tlineas.getLineNumber(), segFor)
+					# Parámetros: direccionamientoRelativo(mnemonico, variable, manejo, lineas, salto=0)
+					direccionador.direccionamientoRelativo(mnemonico, variable.strip("(Etiqueta) "), manejoE, Tlineas.getLineNumber())
 
 dicEtiq = varocons.GettEFinal()
 
@@ -107,35 +107,47 @@ direccionador.resetDirMem(dirMemoriaActual)
 # 2da Compilacion
 segFor = 1
 print("\n--- SEGUNDA PASADA ---")
+etiqueta = ""
+mnemonico = ""
+variable = ""
 for contador in range(1,150):
 	lineaAsc = Tlineas.MandarLinea()
-	noLineaAsc = str(Tlineas.getLineNumber())
+	noLineaAsc = str(Tlineas.getLineNumber() + 1)
 	separadorDLinea.Separando(analizadorDLinea.Analizar(lineaAsc))
-	if(etiquetas.count(separadorDLinea.GettEtiqueta()) != 0):
-		direccion = direccionador.GettDireccion()
-		direccion = direccion[2:]
-		etiqueta = separadorDLinea.GettEtiqueta()
-	if(separadorDLinea.GettMnemonico()!=''):
-		mnemonico = separadorDLinea.GettMnemonico()
+	direccion = direccionador.GettDireccion()
+	direccion = direccion[2:]
+	if(len(lineaAsc.strip(' \t\n')) != 0):
+		if(etiquetas.count(separadorDLinea.GettEtiqueta()) != 0):
+			etiqueta = separadorDLinea.GettEtiqueta()
+		if(separadorDLinea.GettMnemonico()!=''):
+			mnemonico = separadorDLinea.GettMnemonico()
 
-		if(separadorDLinea.GettDireccionamiento().lower() in variables):
-			variable = variables[separadorDLinea.GettDireccionamiento().lower()]
-		elif(etiquetas.count(separadorDLinea.GettDireccionamiento()) != 0):
-			aux = dicEtiq[separadorDLinea.GettDireccionamiento()]
-			variable = aux[2:]
-		else:
-			variable = separadorDLinea.GettDireccionamiento()
-
-		if(variable!='' or mnemonico!=''):
-			if(variable.find("(Etiqueta)") == -1):
-				direccionador.buscarDireccionamiento(mnemonico, variable,1,manejoE,Tlineas.getLineNumber())
-			else:
-				if separadorDLinea.GettMnemonico() == 'JMP':
-					salto = int("0x"+direccionador) - variable
-					direccionador.buscarDireccionamiento(mnemonico,salto[separadorDLinea.GettDireccionamiento()],1,manejoE,Tlineas.getLineNumber())
+			if(separadorDLinea.GettDireccionamiento().lower() in variables):
+				# Instrucción tiene un operando que es una variable o constante
+				variable = variables[separadorDLinea.GettDireccionamiento().lower()]
+				# Parámetros: buscarDireccionamiento(mnemonico, variable, relativo, manejo, lineas)
+				direccionador.buscarDireccionamiento(mnemonico, variable, 1, manejoE, Tlineas.getLineNumber())
+			elif(etiquetas.count(separadorDLinea.GettDireccionamiento()) != 0):
+				# Instrucción tiene un operando que es una etiqueta. Puede tener modo de direccionamiento relativo.
+				aux = dicEtiq[separadorDLinea.GettDireccionamiento()]
+				variable = aux[2:]
+				salto = hex(int("0x"+direccion, 16) - int("0x"+variable, 16))
+				# Se busca modo de direccionamiento, empezando por direccionamiento relativo. En caso de que no sea relativo,
+				# el método buscarDireccionamientoRelativo invocará otro método para buscar otros posibles modos de direccionamiento.
+				# Parámetros: direccionamientoRelativo(mnemonico, variable, manejo, lineas, salto=0)
+				direccionador.direccionamientoRelativo(mnemonico, variable, manejoE, Tlineas.getLineNumber(), salto)
+				"""if separadorDLinea.GettMnemonico() == 'JMP':
+					direccionador.buscarDireccionamiento(mnemonico, salto, 1, manejoE, Tlineas.getLineNumber())
 				else:
-					dic={}
-					direccionador.direccionamientoRelativo(mnemonico, variable.strip("(Etiqueta) "),dic,manejoE,Tlineas.getLineNumber(), segFor)
-
-#print("Las etiquetas son: "+str(varocons.GettEFinal()))
-#ya lo cambie
+					direccionador.direccionamientoRelativo(mnemonico, salto, dic, manejoE, Tlineas.getLineNumber(), segFor)"""
+			else:
+				# Instrucción tiene un operando que es un valor hard-coded en la misma línea de código
+				variable = separadorDLinea.GettDireccionamiento()
+				# Parámetros: buscarDireccionamiento(mnemonico, variable, relativo, manejo, lineas)
+				direccionador.buscarDireccionamiento(mnemonico, variable, 0, manejoE, Tlineas.getLineNumber())
+		codigo_objeto = direccionador.getObjCode()
+	else:
+		codigo_objeto = ""
+	# Formato del archivo listado
+	lineaListado = noLineaAsc + ": " + direccion + " (" + codigo_objeto + ")   :   " + lineaAsc
+	print("LST: "+lineaListado)

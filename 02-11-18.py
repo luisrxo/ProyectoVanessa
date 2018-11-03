@@ -352,8 +352,8 @@ doc=Lector('68HC11.csv')
 doc.CreandoDiccionario()
 documento = doc.getArchivo()
 documento=LectorTxt('START.asc')
-#num_lines = sum(1 for line in documento.getArchivoTxt())
-#print("Numero de lineas: "+str(num_lines))
+num_lines = sum(1 for line in documento.getArchivoTxt())
+print("Numero de lineas: "+str(num_lines))
 Tlineas=LeerLineas(documento.getArchivoTxt())
 analizadorDLinea = AnalizarLinea()
 separadorDLinea = SepararLinea()
@@ -362,7 +362,7 @@ varocons = VariableOConstante()
 
 
 #Codigo para crear la lista de variables y de etiquetas
-for contador in range(1,150):
+for contador in range(1,num_lines):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	if (separadorDLinea.GettEtiqueta() != ''):
 		varocons.VarOEtiq(separadorDLinea.GettEtiqueta())
@@ -375,14 +375,14 @@ print("Las etiquetas son: "+str(varocons.GettEtiquetas()))
 Tlineas.resetLineNumber()
 
 #Encontrando el inicio
-while(contador <150):
+while(contador <num_lines):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	if separadorDLinea.GettMnemonico() == 'ORG':
 		direc=separadorDLinea.GettDireccionamiento()
 		num=int(direc[1:]) 
 		dirMemoriaActual=num
 		print(dirMemoriaActual)
-		contador=150
+		contador=num_lines
 
 
 direccionador = Direccionamiento(doc.getArchivo(), dirMemoriaActual)
@@ -391,7 +391,7 @@ etiquetas = varocons.GettEtiquetas()
 
 
 Tlineas.resetLineNumber()
-for contador in range(1,150):
+for contador in range(1,num_lines):
 
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	print("\nLinea: "+str(Tlineas.getLineNumber()))

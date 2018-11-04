@@ -15,3 +15,5 @@ class LeerLineas:
 
 	def getLineNumber(self):
 		return self.linea
+	def getlin(self):
+		return self.lineas

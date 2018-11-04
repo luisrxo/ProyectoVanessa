@@ -93,7 +93,7 @@ class Direccionamiento:
 						variable=str(hexa).upper()
 						variable=variable[2:len(variable)]
 						if(len(variable)==1):
-							variable='0'+variable						
+							variable='0'+variable
 					if len(variable) > 6 :
 						manejo.error7(lineas)
 					bandera = direccionamientos[0]
@@ -136,14 +136,28 @@ class Direccionamiento:
 				self.dirMem = hex(int("0x"+self.dirMem[2:], 16) + int(bandera[len(bandera)-1]))
 				salto = str(salto)
 				print(salto)
-				if(int(salto,16)< -127 or int(salto,16) >127):
-					manejo.error8(lineas)
+				if(int(salto,16)< -127 or int(salto,16) >128):
+						manejo.error8(lineas)
 				else:
-					if(len(salto)==4 and salto[0]=='-'):					
-						self.objCode = str(bandera[0]) +"0"+salto[3:]
+					if(len(salto)==4 and salto[0]=='-'):
+						salto=bin(int(salto,16)& (2**8-1))
+						print(salto)
+						salto=hex(int(salto,2))
+						print(salto)					
+						self.objCode = str(bandera[0]) +salto[2:]
 					elif(len(salto)==5 and salto[0]=='-'):
+						salto=bin(int(salto,16)& (2**8-1))
+						print(salto)
+						salto=hex(int(salto,2))	
 						self.objCode = str(bandera[0]) +salto[3:]
+						print(salto)
 					elif(len(salto)==3):
+						self.objCode = str(bandera[0]) +"0"+salto[2:]
+					elif(len(salto)==3 and salto[0]=='-'):
+						salto=bin(int(salto,16)& (2**8-1))
+						print(salto)
+						salto=hex(int(salto,2))	
+						print(salto)
 						self.objCode = str(bandera[0]) +"0"+salto[2:]
 					else:
 						self.objCode = str(bandera[0]) + salto[2:]

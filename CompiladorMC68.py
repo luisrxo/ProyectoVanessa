@@ -17,11 +17,14 @@ Tlineas=LeerLineas(documento.getArchivoTxt())
 analizadorDLinea = AnalizarLinea()
 separadorDLinea = SepararLinea()
 varocons = VariableOConstante()
-
+varc=0
+lain=Tlineas.getlin()
+for conli in lain:
+	varc=varc+1
 
 
 #Codigo para crear la lista de variables y de etiquetas
-for contador in range(1,150):
+for contador in range(1,varc-2):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	if (separadorDLinea.GettEtiqueta() != ''):
 		varocons.VarOEtiq(separadorDLinea.GettEtiqueta())
@@ -36,7 +39,7 @@ Tlineas.resetLineNumber()
 dirMemoriaActual= hex(0)
 
 #Encontrando el inicio
-while(contador <150):
+while(contador <varc-2):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	if separadorDLinea.GettMnemonico() == 'ORG':
 		direc=separadorDLinea.GettDireccionamiento()
@@ -62,10 +65,9 @@ print("\n--- PRIMERA PASADA ---")
         varocons.AnadiendoDireccion(direccionador.GettDireccion())
         etiqueta = separadorDLinea.GettEtiqueta()
 		#print("Etiqueta: "+etiqueta)
-
 Tlineas.resetLineNumber()"""
 
-for contador in range(1,150):
+for contador in range(1,varc-2):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	print("\nLinea: "+str(Tlineas.getLineNumber()))
 	if(etiquetas.count(separadorDLinea.GettEtiqueta()) != 0):
@@ -110,7 +112,7 @@ print("\n--- SEGUNDA PASADA ---")
 etiqueta = ""
 mnemonico = ""
 variable = ""
-for contador in range(1,150):
+for contador in range(1,varc-2):
 	lineaAsc = Tlineas.MandarLinea()
 	noLineaAsc = str(Tlineas.getLineNumber() + 1)
 	separadorDLinea.Separando(analizadorDLinea.Analizar(lineaAsc))

@@ -89,7 +89,7 @@ class Direccionamiento:
 			elif(direccionamientos[0]!=0):
 				# Direccionamiento inmediato o relativo
 					if(variable[1]!='$' and variable[1]!="'"):
-						hexa=hex(int(variable))
+						hexa=hex(int(variable[1:]))
 						variable=str(hexa).upper()
 						variable=variable[2:len(variable)]
 					if len(variable) > 6 :

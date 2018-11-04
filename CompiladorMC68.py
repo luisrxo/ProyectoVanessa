@@ -24,7 +24,7 @@ for conli in lain:
 
 
 #Codigo para crear la lista de variables y de etiquetas
-for contador in range(1,varc-2):
+for contador in range(1,varc):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	if (separadorDLinea.GettEtiqueta() != ''):
 		varocons.VarOEtiq(separadorDLinea.GettEtiqueta())
@@ -39,7 +39,7 @@ Tlineas.resetLineNumber()
 dirMemoriaActual= hex(0)
 
 #Encontrando el inicio
-while(contador <varc-2):
+while(contador <varc):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	if separadorDLinea.GettMnemonico() == 'ORG':
 		direc=separadorDLinea.GettDireccionamiento()
@@ -67,7 +67,7 @@ print("\n--- PRIMERA PASADA ---")
 		#print("Etiqueta: "+etiqueta)
 Tlineas.resetLineNumber()"""
 
-for contador in range(1,varc-2):
+for contador in range(1,varc):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	print("\nLinea: "+str(Tlineas.getLineNumber()))
 	if(etiquetas.count(separadorDLinea.GettEtiqueta()) != 0):

@@ -133,7 +133,7 @@ for contador in range(1,varc-2):
 				# Instrucción tiene un operando que es una etiqueta. Puede tener modo de direccionamiento relativo.
 				aux = dicEtiq[separadorDLinea.GettDireccionamiento()]
 				variable = aux[2:]
-				salto = hex(int("0x"+direccion, 16) - int("0x"+variable, 16))
+				salto = hex((int("0x"+variable, 16)-1) - (int("0x"+direccion, 16)+1) )
 				# Se busca modo de direccionamiento, empezando por direccionamiento relativo. En caso de que no sea relativo,
 				# el método buscarDireccionamientoRelativo invocará otro método para buscar otros posibles modos de direccionamiento.
 				# Parámetros: direccionamientoRelativo(mnemonico, variable, manejo, lineas, salto=0)

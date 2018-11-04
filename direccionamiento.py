@@ -133,7 +133,15 @@ class Direccionamiento:
 				#salto=3 #hex(self.dirMem-self.listEti[variable])
 				self.dirMem = hex(int("0x"+self.dirMem[2:], 16) + int(bandera[len(bandera)-1]))
 				salto = str(salto)
-				self.objCode = str(bandera[0]) + salto[2:]
+				print(salto)
+				if(len(salto)==4 and salto[0]=='-'):					
+					self.objCode = str(bandera[0]) +"0"+salto[3:]
+				elif(len(salto)==5 and salto[0]=='-'):
+					self.objCode = str(bandera[0]) +salto[3:]
+				elif(len(salto)==3):
+					self.objCode = str(bandera[0]) +"0"+salto[2:]
+				else:
+					self.objCode = str(bandera[0]) + salto[2:]
 				#print("OpCode, tamanio , direccionamiento  : "+str(bandera)+" : Variable(rel) " +str(salto)+" Mem: "+str(self.dirMem))
 			else:
 				self.buscarDireccionamiento(mnemonico, variable,1,manejo,lineas)

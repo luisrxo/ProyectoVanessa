@@ -92,6 +92,8 @@ class Direccionamiento:
 						hexa=hex(int(variable[1:]))
 						variable=str(hexa).upper()
 						variable=variable[2:len(variable)]
+						if(len(variable)==1):
+							variable='0'+variable						
 					if len(variable) > 6 :
 						manejo.error7(lineas)
 					bandera = direccionamientos[0]

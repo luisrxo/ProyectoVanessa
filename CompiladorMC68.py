@@ -56,7 +56,8 @@ while(contador <varc):
 		dirMemoriaActual=num
 		print("dirMemoriaActual: "+str(dirMemoriaActual))
 		contador=150
-
+	else:
+		dirMemoriaActual = "0x8000"
 # Hay que contemplar caso en el que no hay ORG
 
 

@@ -144,23 +144,23 @@ class Direccionamiento:
 						print(salto)
 						salto=hex(int(salto,2))
 						print(salto)					
-						self.objCode = str(bandera[0]) +salto[2:]
+						self.objCode = str(bandera[0]) +salto[2:].upper()
 					elif(len(salto)==5 and salto[0]=='-'):
 						salto=bin(int(salto,16)& (2**8-1))
 						print(salto)
 						salto=hex(int(salto,2))	
-						self.objCode = str(bandera[0]) +salto[3:]
+						self.objCode = str(bandera[0]) +salto[3:].upper()
 						print(salto)
 					elif(len(salto)==3):
-						self.objCode = str(bandera[0]) +"0"+salto[2:]
+						self.objCode = str(bandera[0]) +"0"+salto[2:].upper()
 					elif(len(salto)==3 and salto[0]=='-'):
 						salto=bin(int(salto,16)& (2**8-1))
 						print(salto)
 						salto=hex(int(salto,2))	
 						print(salto)
-						self.objCode = str(bandera[0]) +"0"+salto[2:]
+						self.objCode = str(bandera[0]) +"0"+salto[2:].upper()
 					else:
-						self.objCode = str(bandera[0]) + salto[2:]
+						self.objCode = str(bandera[0]) + salto[2:].upper()
 				#print("OpCode, tamanio , direccionamiento  : "+str(bandera)+" : Variable(rel) " +str(salto)+" Mem: "+str(self.dirMem))
 			else:
 				self.buscarDireccionamiento(mnemonico, variable,1,manejo,lineas)

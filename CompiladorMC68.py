@@ -56,7 +56,8 @@ while(contador <varc):
 		dirMemoriaActual=num
 		print("dirMemoriaActual: "+str(dirMemoriaActual))
 		contador=150
-
+	else:
+		dirMemoriaActual = "0x8000"
 # Hay que contemplar caso en el que no hay ORG
 
 
@@ -76,16 +77,27 @@ print("\n--- PRIMERA PASADA ---")
 		#print("Etiqueta: "+etiqueta)
 Tlineas.resetLineNumber()"""
 
+banderaEtiqueta  = False
+label = ""
+banderaAux = False
+
 for contador in range(1,varc):
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	print("\nLinea: "+str(Tlineas.getLineNumber()))
+	if banderaAux:
+		banderaAux = False
+		varocons.AnadiendoDireccion(direccionador.GettDireccion())
+		print("Etiqueta: "+label)
+		label = ""
 	if(etiquetas.count(separadorDLinea.GettEtiqueta()) != 0):
 		print("direccionador.GettDireccion(): "+str(direccionador.GettDireccion()))
-		varocons.AnadiendoDireccion(direccionador.GettDireccion())
-		etiqueta = separadorDLinea.GettEtiqueta()
-		print("Etiqueta: "+etiqueta)
+		banderaEtiqueta = True
+		label = separadorDLinea.GettEtiqueta()
 	if(separadorDLinea.GettMnemonico()!=''):
 		mnemonico = separadorDLinea.GettMnemonico()
+		if banderaEtiqueta:
+			banderaAux = True
+			banderaEtiqueta = False
 		print("Mnemonico: "+mnemonico)
 
 		if(separadorDLinea.GettDireccionamiento().lower() in variables):
@@ -124,9 +136,7 @@ variable = ""
 obj = ""
 listado = ""
 indice = 0
-direcciones=[]
-aqui=''
-for contador in range(1,varc-2):
+for contador in range(1,varc):
 	lineaAsc = Tlineas.MandarLinea()
 	noLineaAsc = str(Tlineas.getLineNumber() + 1)
 	separadorDLinea.Separando(analizadorDLinea.Analizar(lineaAsc))
@@ -137,6 +147,7 @@ for contador in range(1,varc-2):
 			etiqueta = separadorDLinea.GettEtiqueta()
 		if(separadorDLinea.GettMnemonico()!=''):
 			mnemonico = separadorDLinea.GettMnemonico()
+
 			if(separadorDLinea.GettDireccionamiento().lower() in variables):
 				# Instrucción tiene un operando que es una variable o constante
 				variable = variables[separadorDLinea.GettDireccionamiento().lower()]
@@ -146,7 +157,12 @@ for contador in range(1,varc-2):
 				# Instrucción tiene un operando que es una etiqueta. Puede tener modo de direccionamiento relativo.
 				aux = dicEtiq[separadorDLinea.GettDireccionamiento()]
 				variable = aux[2:]
-				salto = hex((int("0x"+variable, 16)-1) - (int("0x"+direccion, 16)+1) )
+				salto = hex((int("0x"+variable, 16)) - (int("0x"+direccion, 16)) )
+				if(int(salto, 16)<0):
+					salto = hex(int(salto, 16) - 2)
+				print("Salto: "+salto)
+				print("Variable: "+variable)
+				print("Direccion: "+direccion)
 				# Se busca modo de direccionamiento, empezando por direccionamiento relativo. En caso de que no sea relativo,
 				# el método buscarDireccionamientoRelativo invocará otro método para buscar otros posibles modos de direccionamiento.
 				# Parámetros: direccionamientoRelativo(mnemonico, variable, manejo, lineas, salto=0)
@@ -166,40 +182,17 @@ for contador in range(1,varc-2):
 	# Formato del archivo listado
 	lineaListado = noLineaAsc + ": " + direccion + " (" + codigo_objeto + ")   :   " + lineaAsc + "\n"
 	listado = listado + lineaListado
-	conthex=0
-	#Guarde todos los codigos objeto en una lista de dos en dos, y si encontraba un org entonces tambien lo agregaba a la lista
-	if (lineaAsc.find('ORG')!=-1):
-		aqui=separadorDLinea.GettDireccionamiento()
-		direcciones.append(aqui[1:])
-	for a in codigo_objeto:
-		if conthex == 1:
-			direcciones.append(codigo_objeto[0:2])
-			conthex=0
-			codigo_objeto = codigo_objeto[2:]
-		else:
-			conthex = conthex+1
+	if(indice == 0):
+		obj = obj + "<" + direccion + "> "
+		indice = indice + 1
+	if(obj and obj.strip(' \t\n')):
+		linea = [codigo_objeto[i:i+2] for i in range(0, len(codigo_objeto), 2)]
+		obj = obj + ' '.join(linea) + " "
+		indice = indice + 1
+	if(indice == 16):
+		obj = obj + "\n"
+		indice = 0
 	print("LST: "+lineaListado)
-#Con el programa de abajo fui recorrientdo la lista, si un elemento tenia una longitud mayor a dos entonces es un org
-#Y modifique la linea para que empezara desde esa linea
-#Espero que sea intuitivo
-conthex=0
-actual=''
-for a in direcciones:
-	if (len(a)>2):
-		obj=obj+'\n'
-		obj=obj+'<'+a+'>'
-		actual = a
-
-	else:
-		obj=obj+' '+a
-		conthex=conthex+1
-		if conthex==16:
-			obj = obj+'\n'
-			obj = obj + '<'+str(hex(int("0x"+actual, 16)+16))[2:]+'>'+' '
-			actual = hex(int("0x"+actual, 16)+16)[2:]
-			conthex=0
-
-print (direcciones)
 try:
 	archivo = open(rutaArchivoAsc[0:-4]+'.lst', 'w') 
 	archivo.write(listado)

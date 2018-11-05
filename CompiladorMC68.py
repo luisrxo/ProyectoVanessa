@@ -11,7 +11,16 @@ from errores import Errores
 doc=Lector('68HC11.csv')
 doc.CreandoDiccionario()
 documento = doc.getArchivo()
-documento=LectorTxt('START.asc')
+exito = 0
+while(exito==0):
+	try:
+		rutaArchivoAsc = input("Nombre de archivo.asc: ")
+		documento=LectorTxt(rutaArchivoAsc)
+		exito = 1
+	except FileNotFoundError:
+		print("\n\tArchivo "+rutaArchivoAsc+" no existe. Intente de nuevo.\n")
+
+
 manejoE=Errores()
 Tlineas=LeerLineas(documento.getArchivoTxt())
 analizadorDLinea = AnalizarLinea()
@@ -112,6 +121,9 @@ print("\n--- SEGUNDA PASADA ---")
 etiqueta = ""
 mnemonico = ""
 variable = ""
+obj = ""
+listado = ""
+indice = 0
 for contador in range(1,varc-2):
 	lineaAsc = Tlineas.MandarLinea()
 	noLineaAsc = str(Tlineas.getLineNumber() + 1)
@@ -151,5 +163,25 @@ for contador in range(1,varc-2):
 	else:
 		codigo_objeto = ""
 	# Formato del archivo listado
-	lineaListado = noLineaAsc + ": " + direccion + " (" + codigo_objeto + ")   :   " + lineaAsc
+	lineaListado = noLineaAsc + ": " + direccion + " (" + codigo_objeto + ")   :   " + lineaAsc + "\n"
+	listado = listado + lineaListado
+	if(indice == 0):
+		obj = obj + "<" + direccion + "> "
+		indice = indice + 1
+	if(obj and obj.strip(' \t\n')):
+		linea = [codigo_objeto[i:i+2] for i in range(0, len(codigo_objeto), 2)]
+		obj = obj + ' '.join(linea) + " "
+		indice = indice + 1
+	if(indice == 16):
+		obj = obj + "\n"
+		indice = 0
 	print("LST: "+lineaListado)
+try:
+	archivo = open(rutaArchivoAsc[0:-4]+'.lst', 'w') 
+	archivo.write(listado)
+	archivo.close()
+	archivo = open(rutaArchivoAsc[0:-4]+'.hex', 'w') 
+	archivo.write(obj)
+	archivo.close()
+except Exception:
+	print("Hubo un error al guardar archivos")

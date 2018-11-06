@@ -139,7 +139,9 @@ variable = ""
 obj = ""
 listado = ""
 indice = 0
+
 for contador in range(1,varc):
+	codigo_objeto = ""
 	lineaAsc = Tlineas.MandarLinea()
 	noLineaAsc = str(Tlineas.getLineNumber() + 1)
 	separadorDLinea.Separando(analizadorDLinea.Analizar(lineaAsc))
@@ -156,6 +158,7 @@ for contador in range(1,varc):
 				variable = variables[separadorDLinea.GettDireccionamiento().lower()]
 				# Parámetros: buscarDireccionamiento(mnemonico, variable, relativo, manejo, lineas)
 				direccionador.buscarDireccionamiento(mnemonico, variable, 1, manejoE, Tlineas.getLineNumber())
+				codigo_objeto = direccionador.getObjCode()
 			elif(etiquetas.count(separadorDLinea.GettDireccionamiento()) != 0):
 				# Instrucción tiene un operando que es una etiqueta. Puede tener modo de direccionamiento relativo.
 				aux = dicEtiq[separadorDLinea.GettDireccionamiento()]
@@ -170,6 +173,7 @@ for contador in range(1,varc):
 				# el método buscarDireccionamientoRelativo invocará otro método para buscar otros posibles modos de direccionamiento.
 				# Parámetros: direccionamientoRelativo(mnemonico, variable, manejo, lineas, salto=0)
 				direccionador.direccionamientoRelativo(mnemonico, variable, manejoE, Tlineas.getLineNumber(), salto)
+				codigo_objeto = direccionador.getObjCode()
 				"""if separadorDLinea.GettMnemonico() == 'JMP':
 					direccionador.buscarDireccionamiento(mnemonico, salto, 1, manejoE, Tlineas.getLineNumber())
 				else:
@@ -179,9 +183,10 @@ for contador in range(1,varc):
 				variable = separadorDLinea.GettDireccionamiento()
 				# Parámetros: buscarDireccionamiento(mnemonico, variable, relativo, manejo, lineas)
 				direccionador.buscarDireccionamiento(mnemonico, variable, 0, manejoE, Tlineas.getLineNumber())
-		codigo_objeto = direccionador.getObjCode()
-	else:
-		codigo_objeto = ""
+				codigo_objeto = direccionador.getObjCode()
+		
+	"""else:
+		codigo_objeto = """""
 	# Formato del archivo listado
 	lineaListado = noLineaAsc + ": " + direccion + " (" + codigo_objeto + ")   :   " + lineaAsc + "\n"
 	listado = listado + lineaListado

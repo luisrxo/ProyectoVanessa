@@ -8,7 +8,7 @@ class LeerLineas:
 
 	def MandarLinea(self):
 		self.linea = self.linea+1
-		return self.lineas[self.linea]
+		return self.lineas[self.linea].replace("       ", '\t')
 	
 	def resetLineNumber(self):
 		self.linea = -1

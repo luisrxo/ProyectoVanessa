@@ -5,7 +5,7 @@ from lector import Lector
 from leerLineas import LeerLineas
 from analizarLinea import AnalizarLinea
 from variableOconstante import VariableOConstante
-from errores import Errores
+from errors import Errores
 
 #main provicional
 doc=Lector('68HC11.csv')
@@ -45,7 +45,7 @@ print("Las etiquetas son: "+str(varocons.GettEtiquetas()))
 
 Tlineas.resetLineNumber()
 
-dirMemoriaActual= hex(0)
+dirMemoriaActual = "0x8000"
 
 #Encontrando el inicio
 while(contador <varc):
@@ -55,9 +55,10 @@ while(contador <varc):
 		num=hex(int("0x"+direc[1:], 16))
 		dirMemoriaActual=num
 		print("dirMemoriaActual: "+str(dirMemoriaActual))
-		contador=150
-	else:
-		dirMemoriaActual = "0x8000"
+		contador=varc+1
+	contador = contador + 1
+if(contador == varc+1):
+	print("No se especificó dirección inicial con ORG. Dirección por defecto: 0x8000")
 # Hay que contemplar caso en el que no hay ORG
 
 
@@ -82,6 +83,7 @@ label = ""
 banderaAux = False
 
 for contador in range(1,varc):
+	var = ""
 	separadorDLinea.Separando(analizadorDLinea.Analizar(Tlineas.MandarLinea()))
 	print("\nLinea: "+str(Tlineas.getLineNumber()))
 	if banderaAux:
@@ -99,9 +101,13 @@ for contador in range(1,varc):
 			banderaAux = True
 			banderaEtiqueta = False
 		print("Mnemonico: "+mnemonico)
-
-		if(separadorDLinea.GettDireccionamiento().lower() in variables):
-			variable = variables[separadorDLinea.GettDireccionamiento().lower()]
+		if(separadorDLinea.GettDireccionamiento().lower().strip()):
+			var = separadorDLinea.GettDireccionamiento().lower()
+			if(var[0] == '#'):
+				var = var[1:]
+			print("Var: "+var)
+		if(var in variables):
+			variable = variables[var]
 		elif(etiquetas.count(separadorDLinea.GettDireccionamiento()) != 0):
 			variable = "(Etiqueta) "+separadorDLinea.GettDireccionamiento()
 		else:
@@ -139,9 +145,10 @@ variable = ""
 obj = ""
 listado = ""
 indice = 0
+html = "<!DOCTYPE html>\n<html>\n<body>\n<p>"
 
 for contador in range(1,varc):
-	codigo_objeto = ""
+	codigo_objeto = ["", "", ""]
 	lineaAsc = Tlineas.MandarLinea()
 	noLineaAsc = str(Tlineas.getLineNumber() + 1)
 	separadorDLinea.Separando(analizadorDLinea.Analizar(lineaAsc))
@@ -187,23 +194,28 @@ for contador in range(1,varc):
 		
 	"""else:
 		codigo_objeto = """""
+	opcode = codigo_objeto[0]
+	espaciado = " "*(10-len(noLineaAsc)-len(opcode))
+	espaciadoHTML = "&nbsp"*2*(10-len(noLineaAsc)-len(opcode))
 	# Formato del archivo listado
-	lineaListado = noLineaAsc + ": " + direccion + " (" + codigo_objeto + ")   :   " + lineaAsc + "\n"
+	lineaListado = noLineaAsc + ": " + direccion + " (" + opcode + ")"+espaciado+"   :   " + lineaAsc + "\n"
+	html = html+"<font color=\"blue\">"+ noLineaAsc + ":</font> <font color=\"orange\">" + direccion + "</font> (<font color=\"red\">" + codigo_objeto[1] + "</font><font color=\"green\">" + codigo_objeto[2] + "</font>)"+espaciadoHTML+"   :   " + lineaAsc + "</p>\n<p>"
 	listado = listado + lineaListado
 	conthex=0
 	#Guarde todos los codigos objeto en una lista de dos en dos, y si encontraba un org entonces tambien lo agregaba a la lista
+	
 	if (lineaAsc.find('ORG')!=-1):
 		aqui=separadorDLinea.GettDireccionamiento()
 		direcciones.append(aqui[1:])
-	for a in codigo_objeto:
+	for a in opcode:
 		if conthex == 1:
-			direcciones.append(codigo_objeto[0:2])
+			direcciones.append(opcode)
 			conthex=0
-			codigo_objeto = codigo_objeto[2:]
+			opcode = opcode[2:]
 		else:
 			conthex = conthex+1
 	print("LST: "+lineaListado)
-	#Con el programa de abajo fui recorrientdo la lista, si un elemento tenia una longitud mayor a dos entonces es un org
+#Con el programa de abajo fui recorrientdo la lista, si un elemento tenia una longitud mayor a dos entonces es un org
 #Y modifique la linea para que empezara desde esa linea
 #Espero que sea intuitivo
 conthex=0
@@ -222,12 +234,16 @@ for a in direcciones:
 			actual = hex(int("0x"+actual, 16)+16)[2:]
 			conthex=0
 print (direcciones)
+html = html+"</body>\n</html>"
 try:
 	archivo = open(rutaArchivoAsc[0:-4]+'.lst', 'w') 
 	archivo.write(listado)
 	archivo.close()
 	archivo = open(rutaArchivoAsc[0:-4]+'.hex', 'w') 
 	archivo.write(obj)
+	archivo.close()
+	archivo = open(rutaArchivoAsc[0:-4]+'.html', 'w') 
+	archivo.write(html)
 	archivo.close()
 except Exception:
 	print("Hubo un error al guardar archivos")

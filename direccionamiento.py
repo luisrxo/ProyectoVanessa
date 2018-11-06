@@ -3,14 +3,14 @@ class Direccionamiento:
 		self.Direccionamientos = DiccionarioDireccionamiento
 		self.dirMem = dirMem
 		self.labels = {}
-		self.objCode = ""
+		self.objCode = ["", "", ""]
 		#print(self.Direccionamientos)
 	# Formato de banderas: 
 	# [  1,  2,    3,     4,    5,    6,  7 ]
 	# [IMM, DIR, IND,X, IND,Y, EXT, INH, REL]
 	def buscarDireccionamiento(self, mnemonico, variable,relativo,manejo,lineas):
 		bandera = [0]
-		self.objCode = ""
+		self.objCode = ["", "", ""]
 
 		if (str(variable).find('$') != -1 and (str(variable).find('#')==-1)):
 			if (len(variable[1:])%2 != 0):
@@ -109,7 +109,7 @@ class Direccionamiento:
 			variable = variable.strip('#$')
 			if(variable.find("0x") != -1):
 				variable = variable[2:]
-			self.objCode = str(bandera[0]) + variable
+			self.objCode = [str(bandera[0]) + variable, str(bandera[0]), variable]
 			#print("OpCode, tamanio , direccionamiento  : "+str(bandera)+" : Variable: " +str(variable)+" Mem: "+str(self.dirMem))
 		
 		except KeyError:
@@ -121,7 +121,7 @@ class Direccionamiento:
 			else:
 				manejo.error4(lineas)
 	def direccionamientoRelativo(self, mnemonico, variable, manejo, lineas, salto=0):
-		self.objCode = ""
+		self.objCode = ["", "", ""]
 		try:
 			direccionamiento = self.Direccionamientos[mnemonico.lower()]
 			if (not(variable in self.labels)):
@@ -144,26 +144,27 @@ class Direccionamiento:
 						print(salto)
 						salto=hex(int(salto,2))
 						print(salto)					
-						self.objCode = str(bandera[0]) +salto[2:].upper()
+						self.objCode = [str(bandera[0]) +salto[2:].upper(), str(bandera[0]), salto[2:].upper()]
 					elif(len(salto)==5 and salto[0]=='-'):
 						salto=bin(int(salto,16)& (2**8-1))
 						print(salto)
 						salto=hex(int(salto,2))	
-						self.objCode = str(bandera[0]) +salto[3:].upper()
+						self.objCode = [str(bandera[0]) +salto[3:].upper(), str(bandera[0]), salto[3:].upper()]
 						print(salto)
 					elif(len(salto)==3):
-						self.objCode = str(bandera[0]) +"0"+salto[2:].upper()
+						self.objCode = [str(bandera[0]) +"0"+salto[2:].upper(), str(bandera[0]), "0"+salto[2:].upper()]
 					elif(len(salto)==3 and salto[0]=='-'):
 						salto=bin(int(salto,16)& (2**8-1))
 						print(salto)
 						salto=hex(int(salto,2))	
 						print(salto)
-						self.objCode = str(bandera[0]) +"0"+salto[2:].upper()
+						self.objCode = [str(bandera[0]) +"0"+salto[2:].upper(), str(bandera[0]), "0"+salto[2:].upper()]
 					else:
-						self.objCode = str(bandera[0]) + salto[2:].upper()
+						self.objCode = [str(bandera[0]) + salto[2:].upper(), str(bandera[0]), salto[2:].upper()]
 				#print("OpCode, tamanio , direccionamiento  : "+str(bandera)+" : Variable(rel) " +str(salto)+" Mem: "+str(self.dirMem))
 			else:
 				self.buscarDireccionamiento(mnemonico, variable,1,manejo,lineas)
+			
 		except KeyError:
 			manejo.error4(lineas)
 	def getObjCode(self):

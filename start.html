@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p><font color="blue">1:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   **********************************
+</p>
+<p><font color="blue">2:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   *PROGRAMA START
+</p>
+<p><font color="blue">3:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   **********************************
+</p>
+<p><font color="blue">4:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   PORTD  EQU   $1008
+</p>
+<p><font color="blue">5:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">6:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   DDRD   EQU   $1009
+</p>
+<p><font color="blue">7:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">8:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   SCDR   EQU   $102F
+</p>
+<p><font color="blue">9:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   SCCR2  EQU   $102D
+</p>
+<p><font color="blue">10:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   SCSR   EQU   $102E
+</p>
+<p><font color="blue">11:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   SCCR1  EQU   $102C
+</p>
+<p><font color="blue">12:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   BAUD   EQU   $102B
+</p>
+<p><font color="blue">13:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   HPRIO  EQU   $103C
+</p>
+<p><font color="blue">14:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   SPCR   EQU   $1028
+</p>
+<p><font color="blue">15:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">16:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   * VARIABLES *********************
+</p>
+<p><font color="blue">17:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">18:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   ORDEN  EQU   $0000
+</p>
+<p><font color="blue">19:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   U1     EQU   $0001
+</p>
+<p><font color="blue">20:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   U2     EQU   $0002
+</p>
+<p><font color="blue">21:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   U3     EQU   $0003
+</p>
+<p><font color="blue">22:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   U4     EQU   $0004
+</p>
+<p><font color="blue">23:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">24:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   *INICIO_PROGRAMA *****************
+</p>
+<p><font color="blue">25:</font> <font color="orange">8000</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	ORG $8000
+</p>
+<p><font color="blue">26:</font> <font color="orange">8000</font> (<font color="red">8E</font><font color="green">00FF</font>)&nbsp&nbsp&nbsp&nbsp   :   	LDS #$00FF
+</p>
+<p><font color="blue">27:</font> <font color="orange">8003</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">28:</font> <font color="orange">8003</font> (<font color="red">BD</font><font color="green">8079</font>)&nbsp&nbsp&nbsp&nbsp   :   	JSR SERIAL
+</p>
+<p><font color="blue">29:</font> <font color="orange">8006</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">30:</font> <font color="orange">8006</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :      
+</p>
+<p><font color="blue">31:</font> <font color="orange">8006</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   INICIO
+</p>
+<p><font color="blue">32:</font> <font color="orange">8006</font> (<font color="red">7F</font><font color="green">0004</font>)&nbsp&nbsp&nbsp&nbsp   :   	CLR U4
+</p>
+<p><font color="blue">33:</font> <font color="orange">8009</font> (<font color="red">7F</font><font color="green">0003</font>)&nbsp&nbsp&nbsp&nbsp   :   	CLR U3
+</p>
+<p><font color="blue">34:</font> <font color="orange">800c</font> (<font color="red">7F</font><font color="green">0002</font>)&nbsp&nbsp&nbsp&nbsp   :   	CLR U2
+</p>
+<p><font color="blue">35:</font> <font color="orange">800f</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   BORRA_U1
+</p>
+<p><font color="blue">36:</font> <font color="orange">800f</font> (<font color="red">7F</font><font color="green">0001</font>)&nbsp&nbsp&nbsp&nbsp   :   	CLR U1
+</p>
+<p><font color="blue">37:</font> <font color="orange">8012</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   BORRA_ORDEN
+</p>
+<p><font color="blue">38:</font> <font color="orange">8012</font> (<font color="red">96</font><font color="green">3F</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	LDAA #'?
+</p>
+<p><font color="blue">39:</font> <font color="orange">8014</font> (<font color="red">B7</font><font color="green">0000</font>)&nbsp&nbsp&nbsp&nbsp   :   	STAA ORDEN
+</p>
+<p><font color="blue">40:</font> <font color="orange">8017</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">41:</font> <font color="orange">8017</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   LOOP
+</p>
+<p><font color="blue">42:</font> <font color="orange">8017</font> (<font color="red">B6</font><font color="green">0000</font>)&nbsp&nbsp&nbsp&nbsp   :   	LDAA ORDEN
+</p>
+<p><font color="blue">43:</font> <font color="orange">801a</font> (<font color="red">91</font><font color="green">3F</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	CMPA #'?
+</p>
+<p><font color="blue">44:</font> <font color="orange">801c</font> (<font color="red">27</font><font color="green">FC</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	BEQ LOOP
+</p>
+<p><font color="blue">45:</font> <font color="orange">801e</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	
+</p>
+<p><font color="blue">46:</font> <font color="orange">801e</font> (<font color="red">F6</font><font color="green">0001</font>)&nbsp&nbsp&nbsp&nbsp   :   	LDAB U1
+</p>
+<p><font color="blue">47:</font> <font color="orange">8021</font> (<font color="red">26</font><font color="green">0C</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	BNE SIGUE
+</p>
+<p><font color="blue">48:</font> <font color="orange">8023</font> (<font color="red">91</font><font color="green">53</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	CMPA #'S
+</p>
+<p><font color="blue">49:</font> <font color="orange">8025</font> (<font color="red">26</font><font color="green">D</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	BNE BORRA_ORDEN
+</p>
+<p><font color="blue">50:</font> <font color="orange">8027</font> (<font color="red">B7</font><font color="green">0001</font>)&nbsp&nbsp&nbsp&nbsp   :   	STAA U1
+</p>
+<p><font color="blue">51:</font> <font color="orange">802a</font> (<font color="red">7E</font><font color="green">8025</font>)&nbsp&nbsp&nbsp&nbsp   :   	JMP BORRA_ORDEN 
+</p>
+<p><font color="blue">52:</font> <font color="orange">802d</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">53:</font> <font color="orange">802d</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   SIGUE
+</p>
+<p><font color="blue">54:</font> <font color="orange">802d</font> (<font color="red">F6</font><font color="green">0002</font>)&nbsp&nbsp&nbsp&nbsp   :   	LDAB U2
+</p>
+<p><font color="blue">55:</font> <font color="orange">8030</font> (<font color="red">26</font><font color="green">12</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	BNE SIGUE1
+</p>
+<p><font color="blue">56:</font> <font color="orange">8032</font> (<font color="red">91</font><font color="green">54</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	CMPA #'T
+</p>
+<p><font color="blue">57:</font> <font color="orange">8034</font> (<font color="red">27</font><font color="green">09</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	BEQ VALIDA_T
+</p>
+<p><font color="blue">58:</font> <font color="orange">8036</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">59:</font> <font color="orange">8036</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   CHECA_S
+</p>
+<p><font color="blue">60:</font> <font color="orange">8036</font> (<font color="red">91</font><font color="green">53</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	CMPA #'S
+</p>
+<p><font color="blue">61:</font> <font color="orange">8038</font> (<font color="red">26</font><font color="green">8</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	BNE BORRA_U1
+</p>
+<p><font color="blue">62:</font> <font color="orange">803a</font> (<font color="red">7E</font><font color="green">8025</font>)&nbsp&nbsp&nbsp&nbsp   :   	JMP BORRA_ORDEN
+</p>
+<p><font color="blue">63:</font> <font color="orange">803d</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">64:</font> <font color="orange">803d</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   VALIDA_T
+</p>
+<p><font color="blue">65:</font> <font color="orange">803d</font> (<font color="red">B7</font><font color="green">0002</font>)&nbsp&nbsp&nbsp&nbsp   :   	STAA U2
+</p>
+<p><font color="blue">66:</font> <font color="orange">8040</font> (<font color="red">7E</font><font color="green">8025</font>)&nbsp&nbsp&nbsp&nbsp   :   	JMP BORRA_ORDEN
+</p>
+<p><font color="blue">67:</font> <font color="orange">8043</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">68:</font> <font color="orange">8043</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   SIGUE1	
+</p>
+<p><font color="blue">69:</font> <font color="orange">8043</font> (<font color="red">D6</font><font color="green">2F</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	LDAB 47
+</p>
+<p><font color="blue">70:</font> <font color="orange">8045</font> (<font color="red">26</font><font color="green">12</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	BNE SIGUE2
+</p>
+<p><font color="blue">71:</font> <font color="orange">8047</font> (<font color="red">91</font><font color="green">41</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	CMPA #'A
+</p>
+<p><font color="blue">72:</font> <font color="orange">8049</font> (<font color="red">27</font><font color="green">08</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	BEQ VALIDA_A
+</p>
+<p><font color="blue">73:</font> <font color="orange">804b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   CHECA_XD
+</p>
+<p><font color="blue">74:</font> <font color="orange">804b</font> (<font color="red">7F</font><font color="green">0002</font>)&nbsp&nbsp&nbsp&nbsp   :   	CLR U2
+</p>
+<p><font color="blue">75:</font> <font color="orange">804e</font> (<font color="red">7E</font><font color="green">8035</font>)&nbsp&nbsp&nbsp&nbsp   :   	JMP CHECA_S
+</p>
+<p><font color="blue">76:</font> <font color="orange">8051</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">77:</font> <font color="orange">8051</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   VALIDA_A
+</p>
+<p><font color="blue">78:</font> <font color="orange">8051</font> (<font color="red">B7</font><font color="green">0003</font>)&nbsp&nbsp&nbsp&nbsp   :   	STAA U3
+</p>
+<p><font color="blue">79:</font> <font color="orange">8054</font> (<font color="red">7E</font><font color="green">8025</font>)&nbsp&nbsp&nbsp&nbsp   :   	JMP BORRA_ORDEN
+</p>
+<p><font color="blue">80:</font> <font color="orange">8057</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">81:</font> <font color="orange">8057</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   SIGUE2	
+</p>
+<p><font color="blue">82:</font> <font color="orange">8057</font> (<font color="red">F6</font><font color="green">0004</font>)&nbsp&nbsp&nbsp&nbsp   :   	LDAB U4
+</p>
+<p><font color="blue">83:</font> <font color="orange">805a</font> (<font color="red">26</font><font color="green">11</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	BNE SIGUE3
+</p>
+<p><font color="blue">84:</font> <font color="orange">805c</font> (<font color="red">91</font><font color="green">52</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	CMPA #'R
+</p>
+<p><font color="blue">85:</font> <font color="orange">805e</font> (<font color="red">27</font><font color="green">08</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	BEQ VALIDA_R
+</p>
+<p><font color="blue">86:</font> <font color="orange">8060</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">87:</font> <font color="orange">8060</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   CHECA_ELPACK
+</p>
+<p><font color="blue">88:</font> <font color="orange">8060</font> (<font color="red">7F</font><font color="green">0003</font>)&nbsp&nbsp&nbsp&nbsp   :   	CLR U3
+</p>
+<p><font color="blue">89:</font> <font color="orange">8063</font> (<font color="red">7E</font><font color="green">804b</font>)&nbsp&nbsp&nbsp&nbsp   :   	JMP CHECA_XD
+</p>
+<p><font color="blue">90:</font> <font color="orange">8066</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">91:</font> <font color="orange">8066</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   VALIDA_R
+</p>
+<p><font color="blue">92:</font> <font color="orange">8066</font> (<font color="red">B7</font><font color="green">0004</font>)&nbsp&nbsp&nbsp&nbsp   :   	STAA U4
+</p>
+<p><font color="blue">93:</font> <font color="orange">8069</font> (<font color="red">7E</font><font color="green">8025</font>)&nbsp&nbsp&nbsp&nbsp   :   	JMP BORRA_ORDEN
+</p>
+<p><font color="blue">94:</font> <font color="orange">806c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">95:</font> <font color="orange">806c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   SIGUE3	
+</p>
+<p><font color="blue">96:</font> <font color="orange">806c</font> (<font color="red">91</font><font color="green">54</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	CMPA #'T
+</p>
+<p><font color="blue">97:</font> <font color="orange">806e</font> (<font color="red">27</font><font color="green">09</font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	BEQ EXITO
+</p>
+<p><font color="blue">98:</font> <font color="orange">8070</font> (<font color="red">7F</font><font color="green">0004</font>)&nbsp&nbsp&nbsp&nbsp   :   	CLR U4
+</p>
+<p><font color="blue">99:</font> <font color="orange">8073</font> (<font color="red">7E</font><font color="green">8060</font>)&nbsp&nbsp&nbsp&nbsp   :   	JMP CHECA_ELPACK
+</p>
+<p><font color="blue">100:</font> <font color="orange">8076</font> (<font color="red">3A</font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	ABX
+</p>
+<p><font color="blue">101:</font> <font color="orange">8077</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">102:</font> <font color="orange">8077</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   EXITO
+</p>
+<p><font color="blue">103:</font> <font color="orange">8077</font> (<font color="red">7E</font><font color="green">8009</font>)&nbsp&nbsp   :   	JMP INICIO
+</p>
+<p><font color="blue">104:</font> <font color="orange">807a</font> (<font color="red">1B</font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	ABA
+</p>
+<p><font color="blue">105:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">106:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">107:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   SERIAL
+</p>
+<p><font color="blue">108:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 LDD   #$302C  * CONFIGURA PUERTO SERIAL
+</p>
+<p><font color="blue">109:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 STAA  BAUD    * BAUD  9600  para cristal de 8MHz
+</p>
+<p><font color="blue">110:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 STAB  SCCR2   * HABILITA  RX Y TX PERO INTERRUPCN SOLO RX
+</p>
+<p><font color="blue">111:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 LDAA  #$00
+</p>
+<p><font color="blue">112:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 STAA  SCCR1   * 8 BITS
+</p>
+<p><font color="blue">113:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :    	
+</p>
+<p><font color="blue">114:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 LDAA  #$FE    * CONFIG PUERTO D COMO SALIDAS (EXCEPTO PD0)
+</p>
+<p><font color="blue">115:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 STAA  DDRD    * SEA  ENABLE DEL DISPLAY  PD4  Y RS PD3
+</p>
+<p><font color="blue">116:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   			 
+</p>
+<p><font color="blue">117:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	
+</p>
+<p><font color="blue">118:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 LDAA  #$04
+</p>
+<p><font color="blue">119:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 STAA  HPRIO
+</p>
+<p><font color="blue">120:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :    
+</p>
+<p><font color="blue">121:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 LDAA  #$00
+</p>
+<p><font color="blue">122:</font> <font color="orange">807b</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 TAP
+</p>
+<p><font color="blue">123:</font> <font color="orange">807b</font> (<font color="red">39</font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	RTS
+</p>
+<p><font color="blue">124:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">125:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">126:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">127:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   ***********************************
+</p>
+<p><font color="blue">128:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   * ATENCION A INTERRUPCION SERIAL
+</p>
+<p><font color="blue">129:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   ***********************************
+</p>
+<p><font color="blue">130:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 ORG  $F100
+</p>
+<p><font color="blue">131:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :    
+</p>
+<p><font color="blue">132:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 LDAA SCSR
+</p>
+<p><font color="blue">133:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 LDAA SCDR
+</p>
+<p><font color="blue">134:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 STAA ORDEN
+</p>
+<p><font color="blue">135:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">136:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 RTI
+</p>
+<p><font color="blue">137:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">138:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   ***********************************
+</p>
+<p><font color="blue">139:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   * VECTOR INTERRUPCION SERIAL
+</p>
+<p><font color="blue">140:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   ***********************************
+</p>
+<p><font color="blue">141:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 ORG   $FFD6
+</p>
+<p><font color="blue">142:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 FCB   $F1,$00	
+</p>
+<p><font color="blue">143:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   
+</p>
+<p><font color="blue">144:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   ***********************************
+</p>
+<p><font color="blue">145:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   *RESET
+</p>
+<p><font color="blue">146:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   ***********************************
+</p>
+<p><font color="blue">147:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   	 ORG    $FFFE
+</p>
+<p><font color="blue">148:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   RESET   FCB    $80,$00
+</p>
+<p><font color="blue">149:</font> <font color="orange">807c</font> (<font color="red"></font><font color="green"></font>)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   :   ***********************************
+</p>
+<p></body>
+</html>

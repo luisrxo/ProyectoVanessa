@@ -52,13 +52,13 @@
 
 27: 8003 ()   :   
 
-28: 8003 (BD8078)   :   	JSR SERIAL
+28: 8003 (BD807b)   :   	JSR SERIAL
 
 29: 8006 ()   :   
 
 30: 8006 ()   :      
 
-31: 8006 (BD8078)   :   INICIO
+31: 8006 (BD807b)   :   INICIO
 
 32: 8006 (7F0004)   :   	CLR U4
 
@@ -84,17 +84,17 @@
 
 43: 801a (913F)   :   	CMPA #'?
 
-44: 801c (27F9)   :   	BEQ LOOP
+44: 801c (27FC)   :   	BEQ LOOP
 
 45: 801e ()   :   	
 
 46: 801e (F60001)   :   	LDAB U1
 
-47: 8021 (2607)   :   	BNE SIGUE
+47: 8021 (260C)   :   	BNE SIGUE
 
 48: 8023 (9153)   :   	CMPA #'S
 
-49: 8025 (26B)   :   	BNE BORRA_ORDEN
+49: 8025 (26D)   :   	BNE BORRA_ORDEN
 
 50: 8027 (B70001)   :   	STAA U1
 
@@ -106,19 +106,19 @@
 
 54: 802d (F60002)   :   	LDAB U2
 
-55: 8030 (260E)   :   	BNE SIGUE1
+55: 8030 (2612)   :   	BNE SIGUE1
 
 56: 8032 (9154)   :   	CMPA #'T
 
-57: 8034 (2704)   :   	BEQ VALIDA_T
+57: 8034 (2709)   :   	BEQ VALIDA_T
 
 58: 8036 ()   :   
 
-59: 8036 (2704)   :   CHECA_S
+59: 8036 (2709)   :   CHECA_S
 
 60: 8036 (9153)   :   	CMPA #'S
 
-61: 8038 (265)   :   	BNE BORRA_U1
+61: 8038 (268)   :   	BNE BORRA_U1
 
 62: 803a (7E8025)   :   	JMP BORRA_ORDEN
 
@@ -136,21 +136,21 @@
 
 69: 8043 (D62F)   :   	LDAB 47
 
-70: 8045 (260D)   :   	BNE SIGUE2
+70: 8045 (2612)   :   	BNE SIGUE2
 
 71: 8047 (9141)   :   	CMPA #'A
 
-72: 8049 (2703)   :   	BEQ VALIDA_A
+72: 8049 (2708)   :   	BEQ VALIDA_A
 
-73: 804b (2703)   :   CHECA_XD
+73: 804b (2708)   :   CHECA_XD
 
 74: 804b (7F0002)   :   	CLR U2
 
-75: 804e (7E8033)   :   	JMP CHECA_S
+75: 804e (7E8035)   :   	JMP CHECA_S
 
 76: 8051 ()   :   
 
-77: 8051 (7E8033)   :   VALIDA_A
+77: 8051 (7E8035)   :   VALIDA_A
 
 78: 8051 (B70003)   :   	STAA U3
 
@@ -162,23 +162,23 @@
 
 82: 8057 (F60004)   :   	LDAB U4
 
-83: 805a (260D)   :   	BNE SIGUE3
+83: 805a (2611)   :   	BNE SIGUE3
 
 84: 805c (9152)   :   	CMPA #'R
 
-85: 805e (2703)   :   	BEQ VALIDA_R
+85: 805e (2708)   :   	BEQ VALIDA_R
 
 86: 8060 ()   :   
 
-87: 8060 (2703)   :   CHECA_ELPACK
+87: 8060 (2708)   :   CHECA_ELPACK
 
 88: 8060 (7F0003)   :   	CLR U3
 
-89: 8063 (7E8048)   :   	JMP CHECA_XD
+89: 8063 (7E804b)   :   	JMP CHECA_XD
 
 90: 8066 ()   :   
 
-91: 8066 (7E8048)   :   VALIDA_R
+91: 8066 (7E804b)   :   VALIDA_R
 
 92: 8066 (B70004)   :   	STAA U4
 
@@ -190,11 +190,11 @@
 
 96: 806c (9154)   :   	CMPA #'T
 
-97: 806e (2704)   :   	BEQ EXITO
+97: 806e (2709)   :   	BEQ EXITO
 
 98: 8070 (7F0004)   :   	CLR U4
 
-99: 8073 (7E805d)   :   	JMP CHECA_ELPACK
+99: 8073 (7E8060)   :   	JMP CHECA_ELPACK
 
 100: 8076 (3A)   :   	ABX
 
@@ -202,7 +202,7 @@
 
 102: 8077 (3A)   :   EXITO
 
-103: 8077 (7E8006)   :   	JMP INICIO
+103: 8077 (7E8009)   :   	JMP INICIO
 
 104: 807a (1B)   :   	ABA
 
@@ -291,4 +291,8 @@
 146: FFD6 ()   :   ***********************************
 
 147: FFD6 ()   :           ORG    $FFFE
+
+148: FFFE ()   :   RESET   FCB    $80,$00
+
+149: FFFE ()   :   ***********************************
 

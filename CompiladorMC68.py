@@ -125,6 +125,9 @@ dicEtiq = varocons.GettEFinal()
 
 print("Las etiquetas son: "+str(dicEtiq))
 
+direcciones=[]
+aqui=''
+
 Tlineas.resetLineNumber()
 direccionador.resetDirMem(dirMemoriaActual)
 # 2da Compilacion
@@ -182,17 +185,38 @@ for contador in range(1,varc):
 	# Formato del archivo listado
 	lineaListado = noLineaAsc + ": " + direccion + " (" + codigo_objeto + ")   :   " + lineaAsc + "\n"
 	listado = listado + lineaListado
-	if(indice == 0):
-		obj = obj + "<" + direccion + "> "
-		indice = indice + 1
-	if(obj and obj.strip(' \t\n')):
-		linea = [codigo_objeto[i:i+2] for i in range(0, len(codigo_objeto), 2)]
-		obj = obj + ' '.join(linea) + " "
-		indice = indice + 1
-	if(indice == 16):
-		obj = obj + "\n"
-		indice = 0
+	conthex=0
+	#Guarde todos los codigos objeto en una lista de dos en dos, y si encontraba un org entonces tambien lo agregaba a la lista
+	if (lineaAsc.find('ORG')!=-1):
+		aqui=separadorDLinea.GettDireccionamiento()
+		direcciones.append(aqui[1:])
+	for a in codigo_objeto:
+		if conthex == 1:
+			direcciones.append(codigo_objeto[0:2])
+			conthex=0
+			codigo_objeto = codigo_objeto[2:]
+		else:
+			conthex = conthex+1
 	print("LST: "+lineaListado)
+	#Con el programa de abajo fui recorrientdo la lista, si un elemento tenia una longitud mayor a dos entonces es un org
+#Y modifique la linea para que empezara desde esa linea
+#Espero que sea intuitivo
+conthex=0
+actual=''
+for a in direcciones:
+	if (len(a)>2):
+		obj=obj+'\n'
+		obj=obj+'<'+a+'>'
+		actual = a
+	else:
+		obj=obj+' '+a
+		conthex=conthex+1
+		if conthex==16:
+			obj = obj+'\n'
+			obj = obj + '<'+str(hex(int("0x"+actual, 16)+16))[2:]+'>'
+			actual = hex(int("0x"+actual, 16)+16)[2:]
+			conthex=0
+print (direcciones)
 try:
 	archivo = open(rutaArchivoAsc[0:-4]+'.lst', 'w') 
 	archivo.write(listado)

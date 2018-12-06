@@ -39,7 +39,7 @@ class AnalizarLinea:
 						except StopIteration:
 							print("\t")
 					try:		
-						if  linea [x][1] == 'codigo'and len(linea[x])>1 and rec==0:
+						if  linea [x][1] == 'codigo'and len(linea[x])>1 :
 							x=x+1
 							c=3000
 							while x<len(linea) and linea [x][0] != 'section' :
@@ -47,7 +47,8 @@ class AnalizarLinea:
 
 
 								x=x+1
-								if((ayuda[0])=='\t'):
+								print("ayuda"+ayuda)
+								if((ayuda[0])=='\t' and rec==0):
 									try:
 										st=linea[x-1][1]
 										if(st.find(',')!=-1):
@@ -149,10 +150,11 @@ class AnalizarLinea:
 											self.direcciones.append(manual1)
 											self.direcciones.append(manual2[1]) 
 										elif(ayuda.find('jmp')!=-1 or ayuda.find('call')!=-1) and (part1 in self.lab):
+											print("EEENTRAAAAAAA")
 											manual1=dic[ayuda]
 											manual2=self.lab[part1]
 											self.direcciones.append(manual1)
-											self.direcciones.append(manual2[0]) 
+											self.direcciones.append(manual2) 
 												
 
 											
@@ -162,9 +164,9 @@ class AnalizarLinea:
 
 										print("El mnemonico no existe \n")
 
-								else:
+								elif(ayuda[0]!='\t'):
 
-									self.lab.update({linea[x][0]:str(c)})
+									self.lab.update({linea[x-1][0].strip(':'):str(c)})
 									c=c+1
 									print("etiquetas: "+str(self.lab))
 						else:
@@ -190,12 +192,12 @@ class AnalizarLinea:
 		print("\t")
 		for a in direcciones:
 			print(a)
-			if (len(a)<5):
+			if (len(a)<5 and conthex<4):
 				obj=obj+' '+str(a)
 				conthex=conthex+1
 			elif conthex==4:
 				obj = obj+'\n'
 				conthex=0
 		print(obj)
-
 			
+

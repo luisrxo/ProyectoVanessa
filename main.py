@@ -28,11 +28,9 @@ for line in lain:
 print(lines)
 
 handler2=AnalizarLinea()
-
-handler2.Analizar(lines,mnem)
-
-
-
-
+#primer pasada
+handler2.Analizar(lines,mnem,documento.getArchivo(),1,reg)
+#segunda pasada
+handler2.Analizar(lines,mnem,documento.getArchivo(),0,reg)
 
 

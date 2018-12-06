@@ -150,12 +150,27 @@ class AnalizarLinea:
 											self.direcciones.append(manual1)
 											self.direcciones.append(manual2[1]) 
 										elif(ayuda.find('jmp')!=-1 or ayuda.find('call')!=-1) and (part1 in self.lab):
-											print("EEENTRAAAAAAA")
 											manual1=dic[ayuda]
 											manual2=self.lab[part1]
 											self.direcciones.append(manual1)
 											self.direcciones.append(manual2) 
-												
+										elif(ayuda.find('print')!=-1 and part1 in registros ):
+											manual1=dic[ayuda]
+											manual2=registros[part1]
+											self.direcciones.append(manual1[0])
+											self.direcciones.append(manual2) 
+										elif(ayuda.find('print')!=-1 and (part1 in self.var or part1 in self.lab or part1 in self.ctn) ):
+											manual1=dic[ayuda]
+											manual2=registros[part1]
+											self.direcciones.append(manual1[1])
+											self.direcciones.append(manual2)
+										elif(ayuda.find('print')!=-1 and part1!="" and part2!=""):
+											manual1=dic[ayuda]
+											manual2=registros[part1]
+											#FALTA PONER TAM Y MEM 
+											self.direcciones.append(manual1[1])
+											self.direcciones.append(manual2)	
+
 
 											
 
@@ -191,13 +206,18 @@ class AnalizarLinea:
 		obj=""
 		print("\t")
 		for a in direcciones:
-			print(a)
-			if (len(a)<5 and conthex<4):
+			#print(a)
+			if (len(a)<5):
+				if(len(a)==1):
+					a='000'+str(a)
+				if(len(a)==2):
+					a='00'+str(a)	
+				if(len(a)==3):
+					a='0'+str(a)
 				obj=obj+' '+str(a)
 				conthex=conthex+1
-			elif conthex==4:
-				obj = obj+'\n'
-				conthex=0
+				if conthex==4:
+					obj = obj+'\n'
+					conthex=0
 		print(obj)
 			
-

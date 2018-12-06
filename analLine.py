@@ -9,9 +9,7 @@ class AnalizarLinea:
 	def Analizar(self,linea,dic,archivo,rec,registros):
 		x=0
 		while x < (len(linea)):
-			print(x)
 			print(str(linea[x]))
-			print(str(len(linea[x])))
 			if len(linea[x])<1:
 				try:
 					next(archivo)
@@ -39,7 +37,7 @@ class AnalizarLinea:
 						try:
 							next(archivo)
 						except StopIteration:
-							print("nada")
+							print("\t")
 					try:		
 						if  linea [x][1] == 'codigo'and len(linea[x])>1 and rec==0:
 							x=x+1
@@ -52,34 +50,110 @@ class AnalizarLinea:
 								if((ayuda[0])=='\t'):
 									try:
 										st=linea[x-1][1]
-										print("print string: "+st)
 										if(st.find(',')!=-1):
-											print("va a separar")
+
 											part1=st[:st.find(',')]
 											part2=st[st.find(',')+1:]
-											print("parte1  "+ part1 + "  parte2  "+ part2)
 											print(str(self.ctn))	
-											if(part1 in registros):		
-												print("si está ")
+										elif(st!=""):
+											part1=st
+											part2=""
+										else:
+											part1=""
+											part2=""
 
 									except IndexError:
 										print ("")
 										ayuda=ayuda.strip(' \t')
+										part1=""
+										part2=""
 									try:
 										ayuda=ayuda.strip(' \t')
-										print("ayuda   "+ayuda)
+										
 										print("\t "+ayuda+ "  conversion:  "+ str(dic[ayuda]))
-										print("parte1  "+ part1 + "  parte2  "+ part2)
+
 
 										if (part1 in registros)and (part2 in registros):
 											print("primero")
-										elif ((part1 in registros) and (part2 in self.var))or((part1 in registros) and (part2 in self.ctn)):
+											manual1=dic[ayuda]
+											manual2=registros[part1]
+											manual3=registros[part2]
+											self.direcciones.append(manual1[0])
+											self.direcciones.append(manual2)
+											self.direcciones.append(manual3)
+										elif (part1 in registros) and (part2 in self.ctn):
+											manual1=dic[ayuda]
+											manual2=registros[part1]
+											manual3=self.ctn[part2]
 											print("segundo")
-											
-										elif ((part1 in self.var) and (part2 in registros)) or ((part1 in self.ctn) and (part2 in registros)):
+											self.direcciones.append(manual1[2])
+											self.direcciones.append(manual2)
+											self.direcciones.append(manual3[1])
+										elif (part1 in registros) and (part2 in self.var):
 											print("tercero")
-										elif ((part1 in self.var) and (part2 in self.var)) or ((part1 in self.ctn) and (part2 in self.ctn)):
+											manual1=dic[ayuda]
+											manual2=registros[part1]
+											manual3=self.var[part2]
+											self.direcciones.append(manual1[2])
+											self.direcciones.append(manual2)
+											self.direcciones.append(manual3[1])
+										elif (part1 in self.var) and (part2 in registros):
 											print("cuarto")
+											manual1=dic[ayuda]
+											manual2=self.var[part1]
+											manual3=registros[part2]
+											self.direcciones.append(manual1[1])
+											self.direcciones.append(manual2[1])
+											self.direcciones.append(manual3)
+										elif (part1 in self.ctn) and (part2 in registros):
+											print("quinto")
+											manual1=dic[ayuda]
+											manual2=self.ctn[part1]
+											manual3=registros[part2]
+											self.direcciones.append(manual1[1])
+											self.direcciones.append(manual2[1])
+											self.direcciones.append(manual3)
+										elif (part1 in self.var) and (part2 in self.var): 
+											print("sexto")
+											manual1=dic[ayuda]
+											manual2=self.var[part1]
+											manual3=self.var[part2]
+											self.direcciones.append(manual1[3])
+											self.direcciones.append(manual2[1])
+											self.direcciones.append(manual3[1])
+										elif (part1 in self.ctn) and (part2 in self.ctn):
+											print("septimo")
+											manual1=dic[ayuda]
+											manual2=self.ctn[part1]
+											manual3=self.ctn[part2]
+											self.direcciones.append(manual1[3])
+											self.direcciones.append(manual2[1])
+											self.direcciones.append(manual3[1])
+										elif(ayuda in dic and part1=="" ):
+											print("nada")
+											self.direcciones.append(dic[ayuda])
+										elif(part1 in registros and part2==""):	
+											print("un operando")
+											manual1=dic[ayuda]
+											manual2=registros[part1]
+											self.direcciones.append(manual1)
+											self.direcciones.append(manual2)
+										elif(part1 in self.var and part2==""):	
+											manual1=dic[ayuda]
+											manual2=self.var[part1]
+											self.direcciones.append(manual1)
+											self.direcciones.append(manual2[1])	
+										elif(part1 in self.ctn and part2==""):
+											manual1=dic[ayuda]
+											manual2=self.ctn[part1]
+											self.direcciones.append(manual1)
+											self.direcciones.append(manual2[1]) 
+										elif(ayuda.find('jmp')!=-1 or ayuda.find('call')!=-1) and (part1 in self.lab):
+											manual1=dic[ayuda]
+											manual2=self.lab[part1]
+											self.direcciones.append(manual1)
+											self.direcciones.append(manual2[0]) 
+												
 
 											
 
@@ -92,7 +166,7 @@ class AnalizarLinea:
 
 									self.lab.update({linea[x][0]:str(c)})
 									c=c+1
-									print(self.lab)
+									print("etiquetas: "+str(self.lab))
 						else:
 							print("se va al else")
 							x=x+1
@@ -113,6 +187,7 @@ class AnalizarLinea:
 	def AlArchivo(self,direcciones):
 		conthex=0
 		obj=""
+		print("\t")
 		for a in direcciones:
 			print(a)
 			if (len(a)<5):
@@ -122,3 +197,5 @@ class AnalizarLinea:
 				obj = obj+'\n'
 				conthex=0
 		print(obj)
+
+			

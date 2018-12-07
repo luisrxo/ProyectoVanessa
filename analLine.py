@@ -244,7 +244,7 @@ class AnalizarLinea:
 			print(self.ctn[key])
 			print(key)
 			obj=obj+('; '+' Traduccion: '+(self.ctn[key])[0]+' nombre: '+key+' Valor:  '+(self.ctn[key])[1]+'\n')
-
+		print(obj)
 		for key in self.var:
 			print(self.var[key])
 			obj=obj+('; '+' Traduccion: '+(self.var[key])[0]+' nombre: '+key+' Valor:  '+(self.var[key])[1]+'\n')
@@ -268,7 +268,4 @@ class AnalizarLinea:
 					conthex=0
 		print(obj)
 		self.writer.Crear(ruta,obj)
-
-
-
 

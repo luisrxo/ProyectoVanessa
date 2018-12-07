@@ -268,4 +268,5 @@ class AnalizarLinea:
 					conthex=0
 		print(obj)
 		self.writer.Crear(ruta,obj)
+		
 

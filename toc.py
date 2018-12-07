@@ -1,4 +1,3 @@
-
 class Toc:
 	codigoC=[]
 	
@@ -38,21 +37,21 @@ class Toc:
 				index=index+12
 				index2=index2+12
 				cadena=cadena+12
- 			elif(nueva[index:index2]=='0011'):
+			elif(nueva[index:index2]=='0011'):
 				aux="var"+str(contv)+"="+nueva[index+8:index2+8]
 				self.codigoC.append(aux)
 				contv=contv+1
 				index=index+12
 				index2=index2+12
 				cadena=cadena+12
-  			elif(nueva[index:index2]=='0012'):
+			elif(nueva[index:index2]=='0012'):
 				aux="r"+str(contr)+"="+nueva[index+8:index2+8]
 				self.codigoC.append(aux)
 				contr=contr+1
 				index=index+12
 				index2=index2+12
 				cadena=cadena+12
- 			elif(nueva[index:index2]=='0013'):
+			elif(nueva[index:index2]=='0013'):
 				aux="var"+str(contv)+"="+nueva[index+8:index2+8]
 				self.codigoC.append(aux)
 				contv=contv+1
@@ -73,6 +72,12 @@ class Toc:
 				cadena=cadena+8
 			#ADD
 			elif(linea[index:index2]=='0016' or linea[index:index2]=='0017' or linea[index:index2]=='0018' or linea[index:index2]=='0019' ):
+				op1="a"+str(conts)+"="+nueva[index+4:index2+4]
+				self.codigoC.append(op1)
+				op2="b"+str(conts)+"="+nueva[index+8:index2+8]
+				self.codigoC.append(op2)
+				other=op1+"+"+op2
+				self.codigoC.append(other)
 				auxsuma=int(nueva[index+8:index2+8])+int(nueva[index+4:index2+4])
 				aux="sum"+str(conts)+"="+str(auxsuma)
 				self.codigoC.append(aux)
@@ -90,7 +95,7 @@ class Toc:
 				index2=index2+8
 				cadena=cadena+8
 			#SUB
-			elif(linea[index:index2]=='001B' or linea[index:index2]=='001C' or linea[index:index2]=='001D' or elif(linea[index:index2]=='001E'):
+			elif(linea[index:index2]=='001B' or linea[index:index2]=='001C' or linea[index:index2]=='001D' or linea[index:index2]=='001E'):
 				auxresta=int(nueva[index+8:index2+8])-int(nueva[index+4:index2+4])
 				aux="rest"+str(contresta)+"="+str(auxresta)
 				self.codigoC.append(aux)
@@ -239,7 +244,3 @@ class Toc:
 				index2=index2+12
 				cadena=cadena+12	
 		print(self.codigoC[0])
-			
-		
-		
-		

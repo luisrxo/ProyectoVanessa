@@ -1,3 +1,4 @@
+
 class Toc:
 	codigoC=[]
 	
@@ -72,12 +73,6 @@ class Toc:
 				cadena=cadena+8
 			#ADD
 			elif(linea[index:index2]=='0016' or linea[index:index2]=='0017' or linea[index:index2]=='0018' or linea[index:index2]=='0019' ):
-				op1="a"+str(conts)+"="+nueva[index+4:index2+4]
-				self.codigoC.append(op1)
-				op2="b"+str(conts)+"="+nueva[index+8:index2+8]
-				self.codigoC.append(op2)
-				other=op1+"+"+op2
-				self.codigoC.append(other)
 				auxsuma=int(nueva[index+8:index2+8])+int(nueva[index+4:index2+4])
 				aux="sum"+str(conts)+"="+str(auxsuma)
 				self.codigoC.append(aux)
@@ -244,3 +239,4 @@ class Toc:
 				index2=index2+12
 				cadena=cadena+12	
 		print(self.codigoC[0])
+			

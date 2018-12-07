@@ -2,6 +2,7 @@ from dicc import Dicc
 from arch import Archivo
 from lines import LeerLineas
 from analLine import AnalizarLinea
+from toc import Toc
 
 handler=Dicc()
 reg=handler.GettReg()
@@ -29,8 +30,27 @@ print(lines)
 
 handler2=AnalizarLinea()
 #primer pasada
-handler2.Analizar(lines,mnem,documento.getArchivo(),1,reg)
+handler2.Analizar(lines,mnem,documento.getArchivo(),1,reg,rutaArchivoAsc)
 #segunda pasada
-handler2.Analizar(lines,mnem,documento.getArchivo(),0,reg)
+handler2.Analizar(lines,mnem,documento.getArchivo(),0,reg,rutaArchivoAsc)
+print(rutaArchivoAsc)
+
+try:
+		rutaArchivoO = rutaArchivoAsc[0:-4]+'.O'
+		print(rutaArchivoO)
+		documento1=Archivo(rutaArchivoO)
+except FileNotFoundError:
+		print("\n\tArchivo "+rutaArchivoO+" no existe. Intente de nuevo.\n")
+
+
+line1= documento1.getArchivo().readlines()
+
+handler3=Toc()
+
+
+handler3.analizaTodo(line1)
+
+
+
 
 

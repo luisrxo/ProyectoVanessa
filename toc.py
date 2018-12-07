@@ -240,3 +240,6 @@ class Toc:
 				cadena=cadena+12	
 		print(self.codigoC[0])
 			
+		
+		
+		

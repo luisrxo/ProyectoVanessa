@@ -5,15 +5,70 @@ section constantes
 section codigo
 	mov r01,cst1
 	mov r02,r03
-	add var1,r02
-	sub var2,var3
-	mul r05,var1
-	div cst1,cst2
 	mov cst3,r01
+	mov var1,var2
+	mov cst2,cst3
+	printN r09
+	printN cst1
+	printN var2
+	printCh r05
+	printCh cst2
+	printCh var3
+	printS var1,100
+	printS cst3,60
+	push r04
+	pop r07
+	add r11,r12
+	add var1,r02
+	add r03,var2
+	add var3,var1
+	add cst2,cst3
+	dec r02
+	sub r01,r10
+	sub cst1,r11
+	sub r05,cst2
+	sub r10,cst2
+	sub cst1,cst3
+	sub var2,var3
+	mul r01,r02
+	mul cst1,r11
+	mul r05,cst2
+	mul r10,cst2
+	mul cst1,cst3
+	mul var2,var3
+	mul r05,var1
+	div r01,r02
+	div cst1,r11
+	div r05,cst2
+	div r10,cst2
+	div cst1,cst3
+	div var2,var3
+	div r05,var1
+	inc r14
+	cmp r02,r04
+	and r03,r05
+	readN var1
+	readN cst1
+	readCh var1
+	readCh cst1
+	readS var2,125
+	readS cst2,800
+	tff var3,950
+	call HOLA
+	test r05,r08
+	xor r10,r11
+	jmpz HOLA
+	jmpnz HOLA
+	jmpp HOLA
+	jmpn HOLA
+	or r02,r01
 	nop
 	not r02
 	jmp HOLA
 HOLA:
+	ret
+Hi:
+	nop
 section variables
 	var1 1
 	var2 1

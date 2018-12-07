@@ -240,6 +240,18 @@ class AnalizarLinea:
 		conthex=0
 		obj=""
 		print("\t")
+		for key in self.ctn:
+			print(self.ctn[key])
+			print(key)
+			obj=obj+('; '+' Traduccion: '+(self.ctn[key])[0]+' nombre: '+key+' Valor:  '+(self.ctn[key])[1]+'\n')
+
+		for key in self.var:
+			print(self.var[key])
+			obj=obj+('; '+' Traduccion: '+(self.var[key])[0]+' nombre: '+key+' Valor:  '+(self.var[key])[1]+'\n')
+		for key in self.lab:
+			print(self.lab[key])
+			obj=obj+('; '+' Traduccion: '+(self.lab[key])+' nombre: '+key+'\n')
+
 		for a in direcciones:
 			#print(a)
 			if (len(a)<5):

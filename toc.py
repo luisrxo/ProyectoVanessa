@@ -21,10 +21,14 @@ class Toc:
 		while con < len(lines):			 
 
 			linea=(lines[con]).replace(' ','')
-			linealong=linea.replace('\n','')
-			nueva=nueva+linealong
-			
-			con=con+1
+			nuevalong=linea.replace('\n','')
+			if(linea[0]==';'):
+				con=con+1
+			else:
+				
+				nueva=nueva+nuevalong
+				con=con+1
+		
 		cadena=0
 		print(nueva)
 		print(len(nueva))

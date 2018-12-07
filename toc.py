@@ -1,4 +1,3 @@
-
 class Toc:
 	codigoC=[]
 	
@@ -61,11 +60,17 @@ class Toc:
 				cadena=cadena+12
 			#PUSH
 			elif(linea[index:index2]=='0014'):
-				print("")				
+				print("")
+				index=index+8
+				index2=index2+8
+				cadena=cadena+8				
 			#POP
 			elif(linea[index:index2]=='0015'):
-			#ADD
 				print("")
+				index=index+8
+				index2=index2+8
+				cadena=cadena+8
+			#ADD
 			elif(linea[index:index2]=='0016' or linea[index:index2]=='0017' or linea[index:index2]=='0018' or linea[index:index2]=='0019' ):
 				auxsuma=int(nueva[index+8:index2+8])+int(nueva[index+4:index2+4])
 				aux="sum"+str(conts)+"="+str(auxsuma)
@@ -149,40 +154,87 @@ class Toc:
 			#printS
 			elif(linea[index:index2]=='003A'):
 				print("")
+				index=index+12
+				index2=index2+12
+				cadena=cadena+12
 			#readN
 			elif(linea[index:index2]=='003B'):
+				index=index+8
+				index2=index2+8
+				cadena=cadena+8
 			#readCh
 			elif(linea[index:index2]=='003C'):
+				index=index+8
+				index2=index2+8
+				cadena=cadena+8
 			#readS
 			elif(linea[index:index2]=='003D'):
+				index=index+12
+				index2=index2+12
+				cadena=cadena+12
 			#tff
 			elif(linea[index:index2]=='003E'):
+				index=index+12
+				index2=index2+12
+				cadena=cadena+12
 			#CALL
 			elif(linea[index:index2]=='002F'):
+				index=index+8
+				index2=index2+8
+				cadena=cadena+8
 			#ret
 			elif(linea[index:index2]=='0030'):
+				index=index+4
+				index2=index2+4
+				cadena=cadena+4
 			#jmpz
 			elif(linea[index:index2]=='0031'):
+				index=index+8
+				index2=index2+8
+				cadena=cadena+8
 			#jmpnz
 			elif(linea[index:index2]=='0032'):
+				index=index+8
+				index2=index2+8
+				cadena=cadena+8
 			#jmp
 			elif(linea[index:index2]=='0033'):
+				index=index+8
+				index2=index2+8
+				cadena=cadena+8
 			#jmpp
 			elif(linea[index:index2]=='0034'):
+				index=index+8
+				index2=index2+8
+				cadena=cadena+8
 			#jmpn
 			elif(linea[index:index2]=='0035'):
+				index=index+8
+				index2=index2+8
+				cadena=cadena+8
 			#test
 			elif(linea[index:index2]=='002E'):
+				index=index+12
+				index2=index2+12
+				cadena=cadena+12
 			#nop
 			elif(linea[index:index2]=='002D'):
+				index=index+4
+				index2=index2+4
+				cadena=cadena+4
 			#not
 			elif(linea[index:index2]=='002C'):
+				index=index+8
+				index2=index2+8
+				cadena=cadena+8
 			#xor
 			elif(linea[index:index2]=='002B'):
+				index=index+12
+				index2=index2+12
+				cadena=cadena+12
 			#or
-			elif(linea[index:index2]=='002A'):	
+			elif(linea[index:index2]=='002A'):
+				index=index+12
+				index2=index2+12
+				cadena=cadena+12	
 		print(self.codigoC[0])
-			
-		
-		
-		

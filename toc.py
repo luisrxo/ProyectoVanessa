@@ -249,6 +249,7 @@ class Toc:
 				cadena=cadena+8
 			#jmp
 			elif(nueva[index:index2]=='0033'):
+				self.codigoC.append("goto etiq"+nueva[index+4:index2+4]+';')
 				index=index+8
 				index2=index2+8
 				cadena=cadena+8
@@ -269,6 +270,7 @@ class Toc:
 				cadena=cadena+12
 			#nop
 			elif(nueva[index:index2]=='002D'):
+				self.codigoC.append("Sleep(1000);")
 				index=index+4
 				index2=index2+4
 				cadena=cadena+4
@@ -288,21 +290,26 @@ class Toc:
 				index2=index2+12
 				cadena=cadena+12
 			else:
-				print("nada")
+				conv=int(nueva[index:index2])
+				conv=conv-1
+				self.codigoC.append("etiq"+str(conv)+';')
 				index=index+4
 				index2=index2+4
 				cadena=cadena+4
 	
 		print(self.codigoC)
-		self.toArch(self.codigoC,ruta)	
+		self.toArch(self.codigoC,ruta)		
 	def toArch(self,codigoC,ruta):
 		codigoenc=""
 		codigoenc=codigoenc+"#include<stdio.h>"+"\n"
 		codigoenc=codigoenc+"#include<stdlib.h>"+"\n"
 		codigoenc=codigoenc+"#include<dos.h>"+"\n"
 		codigoenc=codigoenc+"#include<windows.h>"+"\n"
-		codigoenc=codigoenc+"int main() {"
+		codigoenc=codigoenc+"int main() {"+'\n'
 		for paso in codigoC:
+			if(paso.find('=')!=-1 and paso.find('+')==-1 and paso.find('-')==-1 and paso.find('/')==-1 and paso.find('*')==-1):
+				var='int '+paso[0:paso.find('=')]
+				codigoenc=codigoenc+var+';'+'\n'
 			codigoenc=codigoenc+paso+'\n'
 		codigoenc=codigoenc+'}'
 		self.writ.Crear(ruta,codigoenc)
